@@ -1,31 +1,25 @@
 import { useLocation } from "react-router-dom";
 import * as S from "./NavMenu.styles";
-import { Image } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useTelegram } from "../../../hooks/useTelegram";
+import { Image as ChakraImage } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 export const NavMenu = () => {
-  const location = useLocation();
-  const path = location.pathname;
+  const iconNames = ["home", "tickets", "buy", "profile"];
 
-  const [bottom, setBottom] = useState(0);
-
-  const tg = useTelegram();
+  // создаем объект с Image для каждой иконки
+  const icons: Record<string, string> = {};
 
   useEffect(() => {
-    if (!tg) return;
-
-    // Попробуем безопасную зону из SDK
-    const insets = tg?.WebApp?.getSafeAreaInsets?.() ||
-      tg?.WebApp?.safeAreaInsets || {
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-      };
-
-    setBottom(insets.bottom);
-  }, [tg]);
+    iconNames.forEach((name) => {
+      const normal = new Image();
+      normal.src = `/icons/nav/${name}.svg`;
+      const selected = new Image();
+      selected.src = `/icons/nav/${name}_selected.svg`;
+      icons[name] = `/icons/nav/${name}.svg`;
+    });
+  });
+  const location = useLocation();
+  const path = location.pathname;
 
   const links = [
     {
@@ -54,11 +48,11 @@ export const NavMenu = () => {
   ];
 
   return (
-    <S.MenuContainer bottom={bottom}>
+    <S.MenuContainer>
       {links.map((item) => {
         return (
           <S.LinkButton to={item.link} selected={path === item.link}>
-            <Image
+            <ChakraImage
               src={`/icons/nav/${item.name}${
                 path === item.link ? "_selected" : ""
               }.svg`}
