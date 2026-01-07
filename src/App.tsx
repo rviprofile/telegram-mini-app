@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { Home } from "./pages/Home";
 
 const tg = window.Telegram?.WebApp;
 
@@ -9,11 +11,11 @@ function App() {
   }, []);
 
   return (
-    <>
-      <h1>VOSHOD | LOTTERY</h1>
-
-      <p className="read-the-docs">Сайт в разработке</p>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
