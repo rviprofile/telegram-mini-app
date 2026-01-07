@@ -5,14 +5,16 @@ export const MenuContainer = styled.nav`
   background-color: rgba(40, 53, 97, 1);
   box-shadow: 0px -5px 32px 0px rgba(0, 0, 0, 0.5);
   border-top: 2px solid rgba(78, 82, 127, 1);
-  height: 58px;
+  height: 78px;
   width: 100vw;
   box-sizing: border-box;
   position: absolute;
-  bottom: env(safe-area-inset-bottom);
+  bottom: 0;
   left: 0;
   display: flex;
   justify-content: space-between;
+  padding-bottom: 20px;
+  z-index: 100;
 `;
 
 export const LinkButton = styled(Link)<{ selected: boolean }>`

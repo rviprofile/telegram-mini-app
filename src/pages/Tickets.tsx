@@ -1,11 +1,11 @@
-import { Stack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/ui/NavMenu/NavMenu";
 
 export const Tickets = () => {
   return (
-    <Stack>
+    <VStack minH={'100vh'}>
       <p>WORK IN PROGRESS</p>
       <NavMenu />
-    </Stack>
+    </VStack>
   );
 };

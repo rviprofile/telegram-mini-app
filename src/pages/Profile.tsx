@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, VStack, Text } from "@chakra-ui/react";
 import { NavMenu } from "../components/ui/NavMenu/NavMenu";
 import { useTelegram } from "../hooks/useTelegram";
 
@@ -6,7 +6,7 @@ export const Profile = () => {
   const tg = useTelegram();
 
   return (
-    <Stack>
+    <VStack minH={"100vh"}>
       <Text fontSize="xl">Профиль пользователя</Text>
 
       {!tg ? (
@@ -32,6 +32,6 @@ export const Profile = () => {
       )}
 
       <NavMenu />
-    </Stack>
+    </VStack>
   );
 };
