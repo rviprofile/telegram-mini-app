@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import * as S from "./NavMenu.styles";
 import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useTelegram } from "../../../hooks/useTelegram";
 
 export const NavMenu = () => {
   const location = useLocation();
@@ -9,13 +10,22 @@ export const NavMenu = () => {
 
   const [bottom, setBottom] = useState(0);
 
+  const tg = useTelegram();
+
   useEffect(() => {
-    const tg = window.Telegram?.WebApp;
     if (!tg) return;
 
-    const insets = tg.safeAreaInset;
+    // Попробуем безопасную зону из SDK
+    const insets = tg?.WebApp?.getSafeAreaInsets?.() ||
+      tg?.WebApp?.safeAreaInsets || {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      };
+
     setBottom(insets.bottom);
-  }, []);
+  }, [tg]);
 
   const links = [
     {
