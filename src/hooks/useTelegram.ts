@@ -13,7 +13,6 @@ export interface TelegramWebApp {
   initData?: string;
   initDataUnsafe?: {
     user?: TelegramUser;
-    query_id?: string;
     auth_date?: number;
   };
 }
@@ -22,10 +21,17 @@ export const useTelegram = () => {
   const [tg, setTg] = useState<TelegramWebApp | null>(null);
 
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.ready();
-      setTg(window.Telegram.WebApp);
-    }
+    if (!window.Telegram?.WebApp) return;
+
+    const webApp = window.Telegram.WebApp;
+
+    webApp.ready(); 
+
+    setTg({
+      user: webApp.initDataUnsafe?.user,
+      initData: webApp.initData,
+      initDataUnsafe: webApp.initDataUnsafe,
+    });
   }, []);
 
   return tg;
