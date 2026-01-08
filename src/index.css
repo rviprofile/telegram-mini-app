@@ -39,6 +39,7 @@ body {
   min-height: 100vh;
   color: white;
   background: linear-gradient(180deg, rgba(30, 39, 80, 0) 0%, #1e2750 80%);
+  padding-bottom: 60px;
 }
 
 h1 {

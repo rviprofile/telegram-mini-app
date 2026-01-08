@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Capsule = styled.div`
   background-color: #bdf35d;
   color: black;
-  height: 25;
+  height: 25px;
   border-radius: 16px;
   padding-top: 4px;
   padding-right: 8px;

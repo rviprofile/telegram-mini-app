@@ -3,6 +3,7 @@
   margin: 0;
   width: 100%;
   text-align: center;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {
