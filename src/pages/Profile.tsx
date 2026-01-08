@@ -1,5 +1,5 @@
 import { Box, VStack, Text } from "@chakra-ui/react";
-import { NavMenu } from "../components/ui/NavMenu/NavMenu";
+import { NavMenu } from "../components/NavMenu/NavMenu";
 import { useTelegram } from "../hooks/useTelegram";
 
 export const Profile = () => {

@@ -6,11 +6,11 @@ export const CounterCard = () => {
   const value = 300;
   return (
     <S.CardContainer>
-      <Slider.Root defaultValue={[value]} max={plan}>
+      <Slider.Root defaultValue={[value]} max={plan} disabled>
         <HStack justify="space-between" align={"flex-end"}>
           <Slider.ValueText />
 
-          <Slider.Label>{value}</Slider.Label>
+          <Slider.Label>{plan}</Slider.Label>
         </HStack>
         <Slider.Control>
           <Slider.Track h={13} bg="rgba(32, 39, 61, 0.4)">

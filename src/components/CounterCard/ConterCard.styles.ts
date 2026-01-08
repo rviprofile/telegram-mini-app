@@ -33,16 +33,15 @@ export const CardContainer = styled.div`
   p.segment {
     font-family: Inter;
     font-weight: 500;
-    font-style: Medium;
     font-size: 12px;
     line-height: 100%;
     letter-spacing: 0%;
+    opacity: 0.8;
   }
 
   p.value {
     font-family: Inter;
     font-weight: 500;
-    font-style: Medium;
     font-size: 12px;
     line-height: 100%;
     letter-spacing: 0%;
