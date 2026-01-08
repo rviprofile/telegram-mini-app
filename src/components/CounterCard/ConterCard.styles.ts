@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 
+import { Slider } from "@chakra-ui/react";
+
 export const CardContainer = styled.div`
   width: 100%;
   height: 138px;
@@ -11,7 +13,7 @@ export const CardContainer = styled.div`
   background: linear-gradient(115.2deg, #59595916 0%, #cccdd224 100%),
     linear-gradient(106.37deg, #17b5ee 0%, #a356e0 85.74%);
 
-  .chakra-slider__valueText {
+  .valueText {
     font-family: Inter;
     font-weight: 600;
     font-style: Semi Bold;
@@ -45,5 +47,12 @@ export const CardContainer = styled.div`
     font-size: 12px;
     line-height: 100%;
     letter-spacing: 0%;
+  }
+`;
+
+export const Range = styled(Slider.Range)`
+  background: rgba(189, 243, 93, 1) !important;
+  &[data-disabled] {
+    background: rgba(189, 243, 93, 1) !important;
   }
 `;
