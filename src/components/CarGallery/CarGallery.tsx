@@ -3,7 +3,7 @@ import * as S from "./CarGallery.styles";
 import { useState } from "react";
 
 export const CarGallery = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(
+  const [selectedImage] = useState<string | null>(
     "/images/kiario.jpg"
   );
   const isLoading = false;

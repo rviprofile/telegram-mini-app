@@ -4,7 +4,7 @@ import * as S from "./CarInfo.styles";
 export const CarInfo = () => {
   return (
     <S.Container>
-      {Array.from({ length: 9 }).map((_, index) => {
+      {Array.from({ length: 9 }).map((_) => {
         return (
           <S.InfoItem>
             <Image src={"/icons/car/car.svg"} width={"20px"} height={"20px"} />
