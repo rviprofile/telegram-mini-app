@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { Tickets } from "./pages/Tickets";
 import { Buy } from "./pages/Buy";
 import { Profile } from "./pages/Profile";
+import { Car } from "./pages/Car";
 
 const tg = window.Telegram?.WebApp;
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/tickets" element={<Tickets />} />
         <Route path="/buy" element={<Buy />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/car" element={<Car />} />
       </Routes>
     </BrowserRouter>
   );
