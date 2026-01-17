@@ -18,4 +18,8 @@ export const GalleryContainer = styled.div`
       display: none; /* Chrome / Safari */
     }
   }
+
+  .selected {
+    border: 2px solid white;
+  }
 `;
