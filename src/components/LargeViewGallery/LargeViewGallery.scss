@@ -12,6 +12,11 @@
   flex-direction: column;
   justify-content: center;
 
+  .gallery-header {
+    position: absolute;
+    top: 0;
+  }
+
   .carousel {
     position: static;
   }
@@ -82,12 +87,6 @@
   max-height: calc(100dvh - 130px);
   transform: translateY(60px);
 
-  background-color: black;
-
-  .PhotoView__Portal {
-    background: black;
-  }
-
   .PhotoView__PhotoBox {
     position: relative;
     top: auto; /* Сброс некорректного top */
@@ -107,7 +106,8 @@
   justify-content: center;
   margin-top: 12px;
   position: absolute;
-  bottom: 100px;
+  bottom: 40px;
+  z-index: 3000;
 }
 
 .thumbnail {

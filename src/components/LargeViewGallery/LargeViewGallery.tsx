@@ -4,6 +4,7 @@ import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import "./LargeViewGallery.css";
 import "./LargeViewGallery.scss";
+import { PageHeader } from "../PageHeader/PageHeader";
 
 export type TypeImages = {
   image: string;
@@ -40,6 +41,13 @@ export const LargeViewGallery = ({
 
   return (
     <div className="gallery-container">
+      <div className="gallery-header">
+        <PageHeader
+          title={`${index + 1} / ${images.length}`}
+          onPrev={onClose}
+        ></PageHeader>
+      </div>
+
       <Carousel
         indicators={false}
         activeIndex={index}
@@ -52,7 +60,6 @@ export const LargeViewGallery = ({
         ))}
       </Carousel>
 
-      {/* 🔽 Кастомные индикаторы */}
       <div className="gallery-thumbnails">
         {images.map((img, i) => (
           <button
