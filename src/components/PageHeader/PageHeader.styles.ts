@@ -7,8 +7,6 @@ export const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   margin: 16px;
-
-  margin-bottom: 32px;
 `;
 
 export const BackButton = styled.button`

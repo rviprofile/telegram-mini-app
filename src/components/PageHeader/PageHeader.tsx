@@ -10,10 +10,12 @@ export const PageHeader = ({
 }) => {
   return (
     <S.Header>
-      {!!onPrev && (
+      {!!onPrev ? (
         <S.BackButton onClick={onPrev}>
           <Image src={`/icons/chevron-left.svg`} />
         </S.BackButton>
+      ) : (
+        <S.BackButton></S.BackButton>
       )}
       <S.Title>{title}</S.Title>
       <S.BackButton></S.BackButton>
