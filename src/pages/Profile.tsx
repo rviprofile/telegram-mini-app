@@ -32,7 +32,7 @@ export const Profile = () => {
             <b>Язык:</b> {tg.tgWebAppData.user.language_code}
           </Text>
           <Text>
-            <b>initData:</b> {initData}
+            <b>initData:</b> {initData ? "Существует" : "Нет данных"}
           </Text>
           <Text>
             <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}
