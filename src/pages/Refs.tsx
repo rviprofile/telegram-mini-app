@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { PageHeader } from "../components/PageHeader/PageHeader";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RefInputCard } from "../components/RefInputCard/RefInputCard";
 
 export const Refs = () => {
