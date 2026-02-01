@@ -34,10 +34,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     queryKey: ["telegram-login"],
     enabled: Boolean(tg?.initData),
     queryFn: async () => {
-      const res = await axios.post<AuthTokens>(
-        "https://taxivoshod.ru/api/lot/login.php",
-        { initData: tg!.initData },
-      );
+      const res = await axios
+        .post<AuthTokens>("https://taxivoshod.ru/api/lot/login.php", {
+          initData: tg!.initData,
+        })
+        // .catch((e) => console.error(e));
       return res.data;
     },
     retry: false,
