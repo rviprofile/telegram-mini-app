@@ -4,7 +4,7 @@ import { useTelegram } from "../hooks/useTelegram";
 import { useAuth } from "../components/AuthProvider";
 
 export const Profile = () => {
-  const tg = useTelegram();
+  const { tg, initData } = useTelegram();
 
   const auth = useAuth();
 
@@ -32,7 +32,7 @@ export const Profile = () => {
             <b>Язык:</b> {tg.tgWebAppData.user.language_code}
           </Text>
           <Text>
-            <b>initData:</b> {window.Telegram?.WebApp.initData}
+            <b>initData:</b> {initData}
           </Text>
           <Text>
             <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}

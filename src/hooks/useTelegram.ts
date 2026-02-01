@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { retrieveLaunchParams } from "@tma.js/sdk";
+import { retrieveLaunchParams, retrieveRawInitData } from "@tma.js/sdk";
 
 export interface TelegramUser {
   id: number;
@@ -20,11 +20,14 @@ export interface TelegramWebApp {
 
 export const useTelegram = () => {
   const [tg, setTg] = useState<any | null>(null);
+  const [initData, setInitData] = useState<any | null>(null);
 
   useEffect(() => {
     const launchParams = retrieveLaunchParams();
+    const initDataRaw = retrieveRawInitData();
     setTg(launchParams);
+    setInitData(initDataRaw);
   }, []);
 
-  return tg;
+  return { tg, initData };
 };

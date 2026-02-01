@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useTelegram } from "../hooks/useTelegram";
 
 export type AuthTokens = {
   accessToken?: string;
@@ -23,22 +24,24 @@ export type AuthContextValue = {
   logout: () => void;
 };
 
-const tg = window.Telegram?.WebApp;
-
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [tokens, setTokensState] = useState<AuthTokens | null>(null);
 
+  const { initData } = useTelegram();
+
   const { data, isLoading, error } = useQuery<AuthTokens>({
     queryKey: ["telegram-login"],
-    enabled: Boolean(tg?.initData),
+    enabled: Boolean(initData),
     queryFn: async () => {
-      const res = await axios
-        .post<AuthTokens>("https://taxivoshod.ru/api/lot/login.php", {
-          initData: tg!.initData,
-        })
-        // .catch((e) => console.error(e));
+      const res = await axios.post<AuthTokens>(
+        "https://taxivoshod.ru/api/lot/login.php",
+        {
+          initData,
+        },
+      );
+      // .catch((e) => console.error(e));
       return res.data;
     },
     retry: false,
