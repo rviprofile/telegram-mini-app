@@ -32,7 +32,7 @@ export const Profile = () => {
             <b>Язык:</b> {tg.tgWebAppData.user.language_code}
           </Text>
           <Text>
-            <b>initData:</b> {tg.initData ? "Существует" : tg.initData}
+            <b>initData:</b> {window.Telegram?.WebApp.initData}
           </Text>
           <Text>
             <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}
