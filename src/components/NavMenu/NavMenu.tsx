@@ -39,7 +39,11 @@ export const NavMenu = () => {
       title: "Купить",
       name: "buy",
     },
-
+    {
+      link: "/refs",
+      title: "Рефералы",
+      name: "people",
+    },
     {
       link: "/profile",
       title: "Профиль",

@@ -1,9 +1,12 @@
 import { Box, VStack, Text } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { useTelegram } from "../hooks/useTelegram";
+import { useAuth } from "../components/AuthProvider";
 
 export const Profile = () => {
   const tg = useTelegram();
+
+  const auth = useAuth();
 
   return (
     <VStack minH={"100vh"}>
@@ -27,6 +30,12 @@ export const Profile = () => {
           </Text>
           <Text>
             <b>Язык:</b> {tg.tgWebAppData.user.language_code}
+          </Text>
+          <Text>
+            <b>initData:</b> {tg.initData ? "Существует" : "Не найдено"}
+          </Text>
+          <Text>
+            <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}
           </Text>
         </Box>
       )}
