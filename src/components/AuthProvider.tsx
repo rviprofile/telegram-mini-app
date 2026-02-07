@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useTelegram } from "../hooks/useTelegram";
 
 export type AuthTokens = {
   accessToken?: string;
@@ -29,7 +28,6 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [tokens, setTokensState] = useState<AuthTokens | null>(null);
 
-  // const { initData } = useTelegram();
   const initData = false;
 
   const { data, isLoading, error } = useQuery<AuthTokens>({
