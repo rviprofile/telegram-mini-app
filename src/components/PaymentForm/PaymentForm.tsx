@@ -2,13 +2,18 @@ import { Button, Text, VStack } from "@chakra-ui/react";
 import { withMask } from "use-mask-input";
 import * as S from "./PaymentForm.styles";
 import { FormProvider, useForm } from "react-hook-form";
+import type { Step } from "../../pages/Payment";
 
 type FormValues = {
   email: string;
   phone: string;
 };
 
-export const PaymentForm = () => {
+export const PaymentForm = ({
+  setStep,
+}: {
+  setStep: React.Dispatch<React.SetStateAction<Step>>;
+}) => {
   const methods = useForm<FormValues>({});
   const { register, handleSubmit } = methods;
   const phoneRegister = register("phone");
@@ -60,6 +65,7 @@ export const PaymentForm = () => {
             width={"100%"}
             padding={"9px 16px"}
             type="submit"
+            onClick={() =>  setStep("success")}
           >
             Перейти к оплте (Т-Банк)
           </Button>

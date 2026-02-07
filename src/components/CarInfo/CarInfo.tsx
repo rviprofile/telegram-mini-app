@@ -1,16 +1,17 @@
 import { Image, VStack } from "@chakra-ui/react";
 import * as S from "./CarInfo.styles";
+import type { CarDetail } from "../../api/types";
 
-export const CarInfo = () => {
+export const CarInfo = ({ cardetail }: { cardetail: CarDetail }) => {
   return (
     <S.Container>
-      {Array.from({ length: 9 }).map((_) => {
+      {cardetail.props.map((prop) => {
         return (
           <S.InfoItem>
-            <Image src={"/icons/car/car.svg"} width={"20px"} height={"20px"} />
+            <Image src={prop.ico} width={"20px"} height={"20px"} />
             <VStack align={"flex-start"}>
-              <p className="title">Заголовок:</p>
-              <p className="value">Значение</p>
+              <p className="title">{prop.name}</p>
+              <p className="value">{prop.value}</p>
             </VStack>
           </S.InfoItem>
         );

@@ -1,9 +1,21 @@
 import { HStack, Slider, Text, VStack } from "@chakra-ui/react";
 import * as S from "./ConterCard.styles";
+import type { LotteryProgress } from "../../api/types";
+import { useQuery } from "@tanstack/react-query";
+import API from "../../api";
 
 export const CounterCard = () => {
-  const plan = 10000;
-  const value = 1200;
+  const { data: progress } = useQuery({
+    queryKey: ["progress"],
+    queryFn: async (): Promise<LotteryProgress> => {
+      return await API.get("/progress");
+    },
+  });
+  if (!progress) {
+    return null;
+  }
+  const plan = progress.ticketsTarget;
+  const value = progress.ticketsCount;
   return (
     <S.CardContainer>
       <Slider.Root value={[value]} max={plan}>
@@ -33,7 +45,9 @@ export const CounterCard = () => {
         </VStack>
         <VStack align={"flex-start"}>
           <p className="segment">Осталось:</p>
-          <p className="value">{(plan - value).toLocaleString("ru-RU")}</p>
+          <p className="value">
+            {progress.ticketsLeft.toLocaleString("ru-RU")}
+          </p>
         </VStack>
       </HStack>
     </S.CardContainer>

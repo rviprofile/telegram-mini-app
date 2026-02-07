@@ -1,14 +1,10 @@
 import * as S from "./CarDescription.styles";
 
-const CarDescription = () => {
+const CarDescription = ({ description }: { description: string }) => {
   return (
     <S.Container>
       <h2>О призе</h2>
-      <p>
-        Мезонин — это многозначный термин, обозначающий полуэтаж над средней
-        частью дома или многоуровневую стеллажную конструкцию на складах для
-        увеличения полезной площади.
-      </p>
+      <p>{description}</p>
     </S.Container>
   );
 };

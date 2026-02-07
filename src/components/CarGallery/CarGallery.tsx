@@ -2,43 +2,31 @@ import { HStack, Image, Skeleton } from "@chakra-ui/react";
 import * as S from "./CarGallery.styles";
 import { useState } from "react";
 import { LargeViewGallery } from "../LargeViewGallery/LargeViewGallery";
+import type { CarDetail } from "../../api/types";
 
-const mokimages = [
-  {
-    image: "/images/kiario.jpg",
-    id: 1,
-  },
-  {
-    image: "/images/kiario.jpg",
-    id: 2,
-  },
-  {
-    image: "/images/kiario.jpg",
-    id: 3,
-  },
-  {
-    image: "/images/kiario.jpg",
-    id: 4,
-  },
-];
-
-export const CarGallery = () => {
+export const CarGallery = ({ cardetail }: { cardetail: CarDetail }) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [isLargeViewOpen, setIsLargeViewOpen] = useState<boolean>(false);
   const isLoading = false;
+  const galleryarray = cardetail.images.map((image: string, index: number) => {
+    return {
+      image,
+      id: index,
+    };
+  });
   return (
     <S.GalleryContainer>
       {isLargeViewOpen && (
         <LargeViewGallery
           onClose={() => setIsLargeViewOpen(false)}
           open={isLargeViewOpen}
-          images={mokimages}
+          images={galleryarray}
           currentIndex={selectedImage}
         />
       )}
       {!isLoading ? (
         <Image
-          src={mokimages[selectedImage].image}
+          src={galleryarray[selectedImage].image}
           onClick={() => setIsLargeViewOpen(true)}
         />
       ) : (
@@ -58,7 +46,7 @@ export const CarGallery = () => {
             <Skeleton width={"58px"} height={"58px"} />
           </>
         ) : (
-          mokimages.map((item, index) => (
+          galleryarray.map((item, index) => (
             <Image
               key={index}
               src={item.image}

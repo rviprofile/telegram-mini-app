@@ -1,13 +1,30 @@
 import { Button, HStack } from "@chakra-ui/react";
 import * as S from "./ActionTicketsCard.styles";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import type { TicketsList } from "../../api/types";
+import API from "../../api";
 
 export const ActionTicketsCard = () => {
-  const tickets = 30;
   const navigate = useNavigate();
+  const { data: tickets } = useQuery({
+    queryKey: ["ticket/list"],
+    queryFn: async (): Promise<TicketsList> => {
+      return await API.get("/ticket/list");
+    },
+  });
+  if (!tickets) {
+    return null;
+  }
+  const totalTickets = tickets.reduce(
+    (sum, item) => sum + (item.ticketCount ?? 0),
+    0,
+  );
   return (
     <S.CardContainer>
-      <h2>Ваши билеты в текущей акции: {tickets.toLocaleString("ru-RU")}</h2>
+      <h2>
+        Ваши билеты в текущей акции: {totalTickets.toLocaleString("ru-RU")}
+      </h2>
       <HStack maxW={"100%"} gap={"8px"}>
         <Button
           size={"xl"}
