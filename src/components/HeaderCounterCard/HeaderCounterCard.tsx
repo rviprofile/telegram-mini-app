@@ -1,10 +1,52 @@
 import { HStack, Slider, Text } from "@chakra-ui/react";
 import { Capsule } from "../Capsule/Capsule";
 import * as S from "./HeaderCounterCard.styles";
+import { useQuery } from "@tanstack/react-query";
+import type { LotteryProgress } from "../../api/types";
+import API from "../../api";
 
 export const HeaderCounterCard = () => {
-  const value = 1200;
-  const plan = 10000;
+  const { data: progress } = useQuery({
+    queryKey: ["progress"],
+    queryFn: async (): Promise<LotteryProgress> => {
+      return await API.get("/progress");
+    },
+  });
+  if (!progress) {
+    return null;
+  }
+  const value = progress?.ticketsCount;
+  const plan = progress?.ticketsTarget;
+
+  const getStatus = () => {
+    switch (progress.status) {
+      case "in_progress":
+        return {
+          color: "#bdf35d",
+          text: "Активен",
+        };
+      case "await":
+        return {
+          color: "#f3ee5d",
+          text: " Ожидает запуска",
+        };
+      case "result_await":
+        return {
+          color: "#5df3b0",
+          text: "Подсчёт результатов",
+        };
+      case "finished":
+        return {
+          color: "#f37b5d",
+          text: "Завершен",
+        };
+      default:
+        return {
+          color: "#925df3",
+          text: "Неизвестен",
+        };
+    }
+  };
   return (
     <S.CardContainer>
       <h1>
@@ -13,7 +55,7 @@ export const HeaderCounterCard = () => {
         автомобиля
       </h1>
       <S.StatusCapsule>
-        <Capsule text="Активна" />
+        <Capsule color={getStatus().color} text={getStatus().text} />
       </S.StatusCapsule>
       <Slider.Root value={[value]} max={plan}>
         <Slider.Control>

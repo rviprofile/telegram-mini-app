@@ -19,6 +19,12 @@ export type CarDetail = {
     value: string;
   }[];
 };
+export type LotteryStatus =
+  | "await" // Ожидает запуска
+  | "in_progress" // В процесс розыгрыша
+  | "result_await" // В процесс подведения результатов
+  | "finished" // Результаты подведены, розыгрыш закончен
+  | "unknown"; // Статус неизвестен
 
 export type LotteryProgress = {
   id: string | number;
@@ -26,7 +32,7 @@ export type LotteryProgress = {
   startDate: string;
   finishDate: string;
   cutOffDate: string;
-  status: string;
+  status: LotteryStatus;
   ticketsTarget: number;
   ticketsCount: number;
   ticketsLeft: number;

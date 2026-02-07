@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
-export const Capsule = styled.div`
-  background-color: #bdf35d;
+export const Capsule = styled.div<{ color }>`
+  background-color: ${({ color }) => color};
   color: black;
   height: 25px;
   border-radius: 16px;
