@@ -1,8 +1,5 @@
-import { HStack, Slider, Text, VStack } from "@chakra-ui/react";
+import { HStack, Slider} from "@chakra-ui/react";
 import * as S from "./RefsCounter.styles";
-import type { LotteryProgress } from "../../api/types";
-import { useQuery } from "@tanstack/react-query";
-import API from "../../api";
 
 export const RefsCounter = () => {
   const sended = 10;
