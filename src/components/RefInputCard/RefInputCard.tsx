@@ -15,7 +15,15 @@ export const RefInputCard = () => {
         />
       </Field.Root>
       <Grid gridTemplateColumns={"1fr 1fr"} w={"100%"} gap={"8px"}>
-        <Button variant={"outline"} width={"100%"}>
+        <Button
+          variant={"outline"}
+          width={"100%"}
+          onClick={() =>
+            navigator.clipboard.writeText(
+              "https://chakra-ui.com/docs/components/input",
+            )
+          }
+        >
           Скопировать
         </Button>
         <Button variant={"outline"} width={"100%"}>

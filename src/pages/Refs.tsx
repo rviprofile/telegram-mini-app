@@ -3,6 +3,8 @@ import { NavMenu } from "../components/NavMenu/NavMenu";
 import { PageHeader } from "../components/PageHeader/PageHeader";
 import { useNavigate } from "react-router-dom";
 import { RefInputCard } from "../components/RefInputCard/RefInputCard";
+import { RefsCounter } from "../components/RefsCounter/RefsCounter";
+import { RefsListCard } from "../components/RefsListCard/RefsListCard";
 
 export const Refs = () => {
   const navigate = useNavigate();
@@ -11,6 +13,8 @@ export const Refs = () => {
       <PageHeader title="Рефералы" onPrev={() => navigate("/")} />
       <VStack w={"100%"} padding={"0 16px"}>
         <RefInputCard />
+        <RefsCounter />
+        <RefsListCard />
       </VStack>
       <NavMenu />
     </VStack>
