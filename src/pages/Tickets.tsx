@@ -2,7 +2,7 @@ import { Text, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { PageHeader } from "../components/PageHeader/PageHeader";
 import { useQuery } from "@tanstack/react-query";
-import type { LotteryProgress, TicketsList } from "../api/types";
+import type { TicketsList } from "../api/types";
 import API from "../api";
 import { YourTicketsColumn } from "../components/YourTicketsColumn/YourTicketsColumn";
 import { HeaderCounterCard } from "../components/HeaderCounterCard/HeaderCounterCard";
