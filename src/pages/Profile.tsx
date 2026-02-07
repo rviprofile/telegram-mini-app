@@ -4,7 +4,7 @@ import { useTelegram } from "../hooks/useTelegram";
 import { useAuth } from "../components/AuthProvider";
 
 export const Profile = () => {
-  const { tg, initData } = useTelegram();
+  const { tg, initData, startParam } = useTelegram();
 
   const auth = useAuth();
 
@@ -34,6 +34,10 @@ export const Profile = () => {
           <Text>
             <b>initData:</b> {initData ? "Существует" : "Нет данных"}
           </Text>
+          <Text>
+            <b>start_param:</b> {startParam}
+          </Text>
+
           <Text>
             <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}
           </Text>

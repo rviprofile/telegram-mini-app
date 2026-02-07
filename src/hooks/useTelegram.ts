@@ -21,13 +21,15 @@ export interface TelegramWebApp {
 export const useTelegram = () => {
   const [tg, setTg] = useState<any | null>(null);
   const [initData, setInitData] = useState<any | null>(null);
+  const [startParam, setStartParam] = useState<any | null>(null);
 
   useEffect(() => {
     const launchParams = retrieveLaunchParams();
     const initDataRaw = retrieveRawInitData();
     setTg(launchParams);
     setInitData(initDataRaw);
+    setStartParam(launchParams.tgWebAppStartParam);
   }, []);
 
-  return { tg, initData };
+  return { tg, initData, startParam };
 };
