@@ -39,10 +39,6 @@ export const Profile = () => {
           </Text>
 
           <Text>
-            <b>tg</b> {tg}
-          </Text>
-
-          <Text>
             <b>Токены:</b> {auth.tokens ? "Получены" : "Не получены"}
           </Text>
         </Box>
