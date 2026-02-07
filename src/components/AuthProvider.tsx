@@ -29,7 +29,8 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [tokens, setTokensState] = useState<AuthTokens | null>(null);
 
-  const { initData } = useTelegram();
+  // const { initData } = useTelegram();
+  const initData = false;
 
   const { data, isLoading, error } = useQuery<AuthTokens>({
     queryKey: ["telegram-login"],

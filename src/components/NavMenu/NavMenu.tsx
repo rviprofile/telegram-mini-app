@@ -55,7 +55,11 @@ export const NavMenu = () => {
     <S.MenuContainer>
       {links.map((item) => {
         return (
-          <S.LinkButton to={item.link} selected={path === item.link}>
+          <S.LinkButton
+            key={item.link}
+            to={item.link}
+            selected={path === item.link}
+          >
             <ChakraImage
               src={`/icons/nav/${item.name}${
                 path === item.link ? "_selected" : ""
