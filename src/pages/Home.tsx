@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
-    <VStack minH={"fit-content"} w={"100%"} padding={"20px"}>
+    <VStack minH={"calc(100dvh - 60px)"} w={"100%"} padding={"20px"}>
       <Capsule text={"Текущая акция"} />
       <h1>Розыгрыш автомобиля</h1>
       <PrizePreviewCard />

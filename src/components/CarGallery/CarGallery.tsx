@@ -3,6 +3,7 @@ import * as S from "./CarGallery.styles";
 import { useState } from "react";
 import { LargeViewGallery } from "../LargeViewGallery/LargeViewGallery";
 import type { CarDetail } from "../../api/types";
+import { useNavigate } from "react-router-dom";
 
 export const CarGallery = ({ cardetail }: { cardetail: CarDetail }) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
@@ -14,8 +15,12 @@ export const CarGallery = ({ cardetail }: { cardetail: CarDetail }) => {
       id: index,
     };
   });
+  const navigate = useNavigate();
   return (
     <S.GalleryContainer>
+      <S.CloseButton onClick={() => navigate("/")}>
+        <Image src={`/icons/close.svg`} />
+      </S.CloseButton>
       {isLargeViewOpen && (
         <LargeViewGallery
           onClose={() => setIsLargeViewOpen(false)}
@@ -28,6 +33,8 @@ export const CarGallery = ({ cardetail }: { cardetail: CarDetail }) => {
         <Image
           src={galleryarray[selectedImage].image}
           onClick={() => setIsLargeViewOpen(true)}
+          minHeight={"250px"}
+          background={"rgba(71, 82, 114, 0.4)"}
         />
       ) : (
         <Skeleton width={"100%"} height={"251px"} borderRadius={0} />
@@ -54,6 +61,7 @@ export const CarGallery = ({ cardetail }: { cardetail: CarDetail }) => {
               width="58px"
               borderRadius={"8px"}
               className={selectedImage === index ? "selected" : ""}
+              background={"rgba(71, 82, 114, 0.4)"}
               onClick={() => {
                 setSelectedImage(index);
               }}

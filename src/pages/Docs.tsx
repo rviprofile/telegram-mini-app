@@ -5,7 +5,12 @@ import { DocsLinksList } from "../components/DocsLinksList/DocsLinksList";
 
 export const Docs = () => {
   return (
-    <VStack minH={"100dvh"} w={"100%"} gap={"16px"} padding={"0 16px"}>
+    <VStack
+      minH={"calc(100dvh - 60px)"}
+      w={"100%"}
+      gap={"16px"}
+      padding={"0 16px"}
+    >
       <PageHeader title="ДОКУМЕНТЫ" onPrev={() => {}} />
       <DocsLinksList />
       <VStack gap={"14px"} w={"100%"} margin={"auto  16px 74px 16px"}>

@@ -23,3 +23,18 @@ export const GalleryContainer = styled.div`
     border: 2px solid white;
   }
 `;
+
+export const CloseButton = styled.button`
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  background: rgba(31, 38, 61, 0.1);
+`;

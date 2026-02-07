@@ -5,6 +5,7 @@ export const CardContainer = styled.div<{ image: string }>`
   height: 225px;
   border-radius: 16px;
   position: relative;
+  background-color: rgba(71, 82, 114, 0.4);
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;

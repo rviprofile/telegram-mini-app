@@ -5,7 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 0 16px;
-
+  text-align: start;
+  width: 100%;
   align-items: flex-start;
 
   h2 {
