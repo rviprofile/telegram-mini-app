@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Capsule = styled.div<{ color }>`
+export const Capsule = styled.div<{ color: string }>`
   background-color: ${({ color }) => color};
   color: black;
   height: 25px;

@@ -6,13 +6,13 @@ export const RefInputCard = () => {
     <S.Card>
       <Field.Root>
         <Field.Label className="label-ref">Название</Field.Label>
-        <Input
-          placeholder="Enter your email"
-          className="input-ref"
-          variant="subtle"
-          value={"https://chakra-ui.com/docs/components/input"}
-          disabled
-        />
+        <div className="input-wrapper">
+          <Input
+            className="input-ref"
+            value={"https://chakra-ui.com/docs/components/input"}
+            onChange={() => {}}
+          />
+        </div>
       </Field.Root>
       <Grid gridTemplateColumns={"1fr 1fr"} w={"100%"} gap={"8px"}>
         <Button
