@@ -24,6 +24,7 @@ const apiClient: AxiosInstance = axios.create({
 });
 
 let accessToken: string | null = null;
+let refreshToken: string | null = null;
 
 export const setApiAccessToken = (token: string | null) => {
   accessToken = token;
@@ -70,7 +71,7 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
+      refreshToken = localStorage.getItem("refreshToken");
 
       if (!refreshToken) {
         throw new Error("No refresh token");

@@ -21,9 +21,6 @@ export type AuthContextValue = {
   tokens: AuthTokens | null;
   isLoading: boolean;
   error: unknown;
-
-  setTokens: (tokens: AuthTokens | null) => void;
-  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -43,19 +40,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           startParam: tg.tgWebAppStartParam,
         },
       );
-      // .catch((e) => console.error(e));
+
       return res.data;
     },
     retry: false,
     staleTime: Infinity,
   });
-
-  useEffect(() => {
-    if (data?.access) {
-      setTokensState(data);
-      setApiAccessToken(data.access);
-    }
-  }, [data]);
 
   useEffect(() => {
     if (!data?.access) return;
@@ -64,25 +54,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setApiAccessToken(data.access);
 
     if (data.refresh) {
-      localStorage.setItem("refreshToken", data.refresh);
+      try {
+        localStorage.setItem("refreshToken", data.refresh);
+      } catch {}
     }
   }, [data]);
-
-  useEffect(() => {
-    const logoutHandler = () => logout();
-
-    window.addEventListener("logout", logoutHandler);
-
-    return () => {
-      window.removeEventListener("logout", logoutHandler);
-    };
-  }, []);
-
-  const logout = () => {
-    setTokensState(null);
-    setApiAccessToken(null);
-    localStorage.removeItem("refreshToken");
-  };
 
   const value = useMemo<AuthContextValue>(() => {
     return {
@@ -90,8 +66,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       tokens,
       isLoading,
       error,
-      setTokens: setTokensState,
-      logout,
     };
   }, [tokens, isLoading, error]);
 
