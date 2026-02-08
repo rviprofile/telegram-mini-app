@@ -8,8 +8,6 @@ export const Profile = () => {
 
   const auth = useAuth();
 
-  let windowstartParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-
   return (
     <VStack minH={"calc(100dvh - 60px)"}>
       <Text fontSize="xl">Профиль пользователя</Text>
@@ -37,7 +35,7 @@ export const Profile = () => {
             <b>initData:</b> {initData ? "Существует" : "Нет данных"}
           </Text>
           <Text>
-            <b>windowstartParam:</b> {windowstartParam}
+            <b>start_param:</b> {tg.tgWebAppStartParam}
           </Text>
 
           <Text>
