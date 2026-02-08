@@ -35,7 +35,7 @@ export const Profile = () => {
             <b>initData:</b> {initData ? "Существует" : "Нет данных"}
           </Text>
           <Text>
-            <b>start_param:</b> {startParam}
+            <b>start_param:</b> {tg.tgWebAppStartParam}
           </Text>
 
           <Text>
