@@ -24,7 +24,6 @@ const apiClient: AxiosInstance = axios.create({
 });
 
 let accessToken: string | null = null;
-let refreshToken: string | null = null;
 
 export const setApiAccessToken = (token: string | null) => {
   accessToken = token;
