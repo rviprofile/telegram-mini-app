@@ -28,7 +28,7 @@ export const useTelegram = () => {
     const initDataRaw = retrieveRawInitData();
     setTg(launchParams);
     setInitData(initDataRaw);
-    setStartParam(launchParams.tgWebAppStartParam);
+    setStartParam(launchParams.tgWebAppStartParam ?? launchParams.start_param);
   }, []);
 
   return { tg, initData, startParam };
