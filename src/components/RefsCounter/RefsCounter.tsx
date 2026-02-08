@@ -1,9 +1,21 @@
-import { HStack, Slider} from "@chakra-ui/react";
+import { HStack, Skeleton, Slider } from "@chakra-ui/react";
 import * as S from "./RefsCounter.styles";
 
 export const RefsCounter = () => {
   const sended = 10;
   const aprooved = 7;
+  const isLoading = false;
+  if (isLoading) {
+    return (
+      <Skeleton
+        width={"100%"}
+        height={"91px"}
+        borderRadius={"16px"}
+        variant="shine"
+        opacity={"0.3"}
+      />
+    );
+  }
   return (
     <S.CardContainer>
       <Slider.Root value={[aprooved]} max={sended}>

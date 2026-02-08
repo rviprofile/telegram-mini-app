@@ -1,4 +1,4 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { Skeleton, Text, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { PageHeader } from "../components/PageHeader/PageHeader";
 import { useQuery } from "@tanstack/react-query";
@@ -8,17 +8,13 @@ import { YourTicketsColumn } from "../components/YourTicketsColumn/YourTicketsCo
 import { HeaderCounterCard } from "../components/HeaderCounterCard/HeaderCounterCard";
 
 export const Tickets = () => {
-  const { data: tickets } = useQuery({
+  const { data: tickets, isLoading } = useQuery({
     queryKey: ["ticket/list"],
     queryFn: async (): Promise<TicketsList> => {
       return await API.get("/ticket/list");
     },
   });
-
-  if (!tickets) {
-    return null;
-  }
-  const totalTickets = tickets.reduce(
+  const totalTickets = tickets?.reduce(
     (sum, item) => sum + (item.ticketCount ?? 0),
     0,
   );
@@ -30,11 +26,27 @@ export const Tickets = () => {
       gap={"12px"}
     >
       <PageHeader title="БИЛЕТЫ" />
-      <Text fontWeight={"500"} fontSize={"14px"} w={"100%"} textAlign={"start"}>
-        Ваши билеты в текущей акции: {totalTickets}
-      </Text>
+      {isLoading ? (
+        <Skeleton
+          variant="shine"
+          opacity={"0.3"}
+          width={"70%"}
+          height={"21px"}
+          marginRight={"auto"}
+        />
+      ) : (
+        <Text
+          fontWeight={"500"}
+          fontSize={"14px"}
+          w={"100%"}
+          textAlign={"start"}
+        >
+          Ваши билеты в текущей акции: {totalTickets}
+        </Text>
+      )}
+
       <HeaderCounterCard />
-      <YourTicketsColumn tickets={tickets} />
+      <YourTicketsColumn tickets={tickets} isLoading={isLoading} />
       <NavMenu />
     </VStack>
   );

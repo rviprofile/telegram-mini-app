@@ -1,7 +1,19 @@
-import { HStack, Image, VStack } from "@chakra-ui/react";
+import { HStack, Image, Skeleton, VStack } from "@chakra-ui/react";
 import * as S from "./RefsListCard.styles";
 
 export const RefsListCard = () => {
+  const isLoading = false;
+  if (isLoading) {
+    return (
+      <Skeleton
+        width={"100%"}
+        height={"246px"}
+        borderRadius={"16px"}
+        variant="shine"
+        opacity={"0.3"}
+      />
+    );
+  }
   return (
     <S.Container>
       <VStack className="header" align={"start"}>

@@ -1,16 +1,28 @@
-import { HStack, Slider, Text, VStack } from "@chakra-ui/react";
+import { HStack, Skeleton, Slider, Text, VStack } from "@chakra-ui/react";
 import * as S from "./ConterCard.styles";
 import type { LotteryProgress } from "../../api/types";
 import { useQuery } from "@tanstack/react-query";
 import API from "../../api";
 
 export const CounterCard = () => {
-  const { data: progress } = useQuery({
+  const { data: progress, isLoading } = useQuery({
     queryKey: ["progress"],
     queryFn: async (): Promise<LotteryProgress> => {
       return await API.get("/progress");
     },
   });
+
+  if (isLoading) {
+    return (
+      <Skeleton
+        width={"100%"}
+        height={"138px"}
+        borderRadius={"16px"}
+        variant="shine"
+        opacity={"0.3"}
+      />
+    );
+  }
   if (!progress) {
     return null;
   }

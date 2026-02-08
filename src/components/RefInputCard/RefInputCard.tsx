@@ -1,7 +1,19 @@
-import { Button, Field, Grid, Input } from "@chakra-ui/react";
+import { Button, Field, Grid, Input, Skeleton } from "@chakra-ui/react";
 import * as S from "./RefInputCard.styles";
 
 export const RefInputCard = () => {
+  const isLoading = false;
+  if (isLoading) {
+    return (
+      <Skeleton
+        width={"100%"}
+        height={"148px"}
+        borderRadius={"16px"}
+        variant="shine"
+        opacity={"0.3"}
+      />
+    );
+  }
   return (
     <S.Card>
       <Field.Root>
@@ -9,7 +21,7 @@ export const RefInputCard = () => {
         <div className="input-wrapper">
           <Input
             className="input-ref"
-            value={"https://chakra-ui.com/docs/components/input"}
+            value={"https://t.me/VoshodLotteryBot?startapp=ref_777"}
             onChange={() => {}}
           />
         </div>
@@ -20,7 +32,7 @@ export const RefInputCard = () => {
           width={"100%"}
           onClick={() =>
             navigator.clipboard.writeText(
-              "https://chakra-ui.com/docs/components/input",
+              "https://t.me/VoshodLotteryBot?startapp=ref_777",
             )
           }
         >
