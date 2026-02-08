@@ -45,70 +45,93 @@ apiClient.interceptors.request.use((config) => {
 // RESPONSE INTERCEPTOR (REFRESH FLOW)
 // ========================
 apiClient.interceptors.response.use(
-  (res) => res,
+  async (response) => {
+    // Проверяем кастомную ошибку API
+    if (response.data?.error === "Не указан токен авторизации") {
+      const originalRequest = response.config;
 
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (!originalRequest || error.response?.status !== 401) {
-      return Promise.reject(error);
-    }
-
-    // Если refresh уже идёт — ставим запрос в очередь
-    if (isRefreshing) {
-      return new Promise((resolve, reject) => {
-        queue.push({
-          resolve: (token) => {
-            originalRequest.headers = originalRequest.headers ?? {};
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(apiClient(originalRequest));
-          },
-          reject,
-        });
-      });
-    }
-
-    isRefreshing = true;
-
-    try {
-      refreshToken = localStorage.getItem("refreshToken");
-
-      if (!refreshToken) {
-        throw new Error("No refresh token");
+      // защита от бесконечного retry
+      if ((originalRequest as any)._retry) {
+        return Promise.reject(response);
       }
 
-      const newTokens = await refreshAccessToken(refreshToken);
+      (originalRequest as any)._retry = true;
 
-      // сохраняем новые токены
-      setApiAccessToken(newTokens.access);
-      localStorage.setItem("refreshToken", newTokens.refresh);
+      // если refresh уже идёт — ставим запрос в очередь
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          queue.push({
+            resolve: (token) => {
+              originalRequest.headers = originalRequest.headers ?? {};
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(apiClient(originalRequest));
+            },
+            reject,
+          });
+        });
+      }
 
-      // повторяем очередь
-      queue.forEach(({ resolve }) => resolve(newTokens.access));
-      queue = [];
+      isRefreshing = true;
 
-      // повторяем оригинальный запрос
-      originalRequest.headers = originalRequest.headers ?? {};
-      originalRequest.headers.Authorization = `Bearer ${newTokens.access}`;
+      try {
+        let refreshToken: string | null = null;
 
-      return apiClient(originalRequest);
-    } catch (err) {
-      // отклоняем очередь
-      queue.forEach(({ reject }) => reject(err));
-      queue = [];
+        try {
+          refreshToken = localStorage.getItem("refreshToken");
+        } catch {}
 
-      // чистим сессию
-      localStorage.removeItem("refreshToken");
-      setApiAccessToken(null);
+        if (!refreshToken) {
+          throw new Error("No refresh token");
+        }
 
-      // вызываем logout глобально
-      window.dispatchEvent(new Event("logout"));
+        const newTokens = await refreshAccessToken(refreshToken);
 
-      return Promise.reject(err);
-    } finally {
-      isRefreshing = false;
+        if (!newTokens?.access) {
+          throw new Error("Refresh failed");
+        }
+
+        // сохраняем новые токены
+        setApiAccessToken(newTokens.access);
+
+        try {
+          localStorage.setItem("refreshToken", newTokens.refresh);
+        } catch {}
+
+        // повторяем очередь
+        queue.forEach(({ resolve }) => resolve(newTokens.access));
+        queue = [];
+
+        // повторяем оригинальный запрос
+        originalRequest.headers = originalRequest.headers ?? {};
+        originalRequest.headers.Authorization = `Bearer ${newTokens.access}`;
+
+        return apiClient(originalRequest);
+      } catch (err) {
+        // отклоняем очередь
+        queue.forEach(({ reject }) => reject(err));
+        queue = [];
+
+        // чистим сессию
+        try {
+          localStorage.removeItem("refreshToken");
+        } catch {}
+
+        setApiAccessToken(null);
+
+        window.dispatchEvent(new Event("logout"));
+
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
     }
+
+    // если ошибки нет — просто возвращаем ответ
+    return response;
   },
+
+  // fallback на реальные network ошибки
+  (error) => Promise.reject(error),
 );
 
 /**
