@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     enabled: Boolean(initData),
     queryFn: async () => {
       const res = await axios.post<AuthTokens>(
-        "https://taxivoshod.ru/api/login/init",
+        "https://lot.voshodcrm.ru/api/login/init",
         {
           initData,
           startParam: tg.tgWebAppStartParam,
