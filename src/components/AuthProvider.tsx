@@ -8,10 +8,12 @@ import React, {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useTelegram } from "../hooks/useTelegram";
+import { setApiAccessToken } from "../api";
 
 export type AuthTokens = {
-  accessToken?: string;
-  refreshToken?: string;
+  access?: string;
+  refresh?: string;
+  ttl: number;
 };
 
 export type AuthContextValue = {
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     enabled: Boolean(initData),
     queryFn: async () => {
       const res = await axios.post<AuthTokens>(
-        "https://taxivoshod.ru/api/lot/login.php",
+        "https://taxivoshod.ru/api/login/init",
         {
           initData,
           startParam: tg.tgWebAppStartParam,
@@ -48,27 +50,47 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     staleTime: Infinity,
   });
 
-  const setTokens = (tokens: AuthTokens | null) => {
-    setTokensState(tokens);
-  };
-
-  const logout = () => {
-    setTokensState(null);
-  };
-
   useEffect(() => {
-    if (data) {
-      setTokens(data);
+    if (data?.access) {
+      setTokensState(data);
+      setApiAccessToken(data.access);
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!data?.access) return;
+
+    setTokensState(data);
+    setApiAccessToken(data.access);
+
+    if (data.refresh) {
+      localStorage.setItem("refreshToken", data.refresh);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const logoutHandler = () => logout();
+
+    window.addEventListener("logout", logoutHandler);
+
+    return () => {
+      window.removeEventListener("logout", logoutHandler);
+    };
+  }, []);
+
+  const logout = () => {
+    setTokensState(null);
+    setApiAccessToken(null);
+    localStorage.removeItem("refreshToken");
+  };
+
   const value = useMemo<AuthContextValue>(() => {
     return {
-      isAuthenticated: Boolean(tokens?.accessToken),
+      isAuthenticated: Boolean(tokens?.access),
       tokens,
       isLoading,
       error,
-      setTokens,
+      setTokens: setTokensState,
       logout,
     };
   }, [tokens, isLoading, error]);

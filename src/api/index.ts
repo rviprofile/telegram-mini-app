@@ -1,10 +1,19 @@
 "use client";
 
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
+import { refreshAccessToken } from "./refreshToken";
+
+let isRefreshing = false;
+
+type QueueItem = {
+  resolve: (token: string) => void;
+  reject: (err: any) => void;
+};
+
+let queue: QueueItem[] = [];
+
 /**
  * Экземпляр Axios с базовым URL и таймаутом.
- *
- * @see {@link https://axios-http.com/ru/docs/instance | Экземпляр Axios}
  */
 const apiClient: AxiosInstance = axios.create({
   baseURL: "https://lot.voshodcrm.ru/api/",
@@ -13,6 +22,93 @@ const apiClient: AxiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+let accessToken: string | null = null;
+
+export const setApiAccessToken = (token: string | null) => {
+  accessToken = token;
+};
+
+// ========================
+// REQUEST INTERCEPTOR
+// ========================
+apiClient.interceptors.request.use((config) => {
+  if (accessToken) {
+    config.headers = config.headers ?? {};
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
+// ========================
+// RESPONSE INTERCEPTOR (REFRESH FLOW)
+// ========================
+apiClient.interceptors.response.use(
+  (res) => res,
+
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (!originalRequest || error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
+
+    // Если refresh уже идёт — ставим запрос в очередь
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        queue.push({
+          resolve: (token) => {
+            originalRequest.headers = originalRequest.headers ?? {};
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            resolve(apiClient(originalRequest));
+          },
+          reject,
+        });
+      });
+    }
+
+    isRefreshing = true;
+
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      if (!refreshToken) {
+        throw new Error("No refresh token");
+      }
+
+      const newTokens = await refreshAccessToken(refreshToken);
+
+      // сохраняем новые токены
+      setApiAccessToken(newTokens.access);
+      localStorage.setItem("refreshToken", newTokens.refresh);
+
+      // повторяем очередь
+      queue.forEach(({ resolve }) => resolve(newTokens.access));
+      queue = [];
+
+      // повторяем оригинальный запрос
+      originalRequest.headers = originalRequest.headers ?? {};
+      originalRequest.headers.Authorization = `Bearer ${newTokens.access}`;
+
+      return apiClient(originalRequest);
+    } catch (err) {
+      // отклоняем очередь
+      queue.forEach(({ reject }) => reject(err));
+      queue = [];
+
+      // чистим сессию
+      localStorage.removeItem("refreshToken");
+      setApiAccessToken(null);
+
+      // вызываем logout глобально
+      window.dispatchEvent(new Event("logout"));
+
+      return Promise.reject(err);
+    } finally {
+      isRefreshing = false;
+    }
+  },
+);
 
 /**
  * Утилита для работы с API через Axios.
