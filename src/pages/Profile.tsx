@@ -4,7 +4,7 @@ import { useTelegram } from "../hooks/useTelegram";
 import { useAuth } from "../components/AuthProvider";
 
 export const Profile = () => {
-  const { tg, initData, startParam } = useTelegram();
+  const { tg, initData } = useTelegram();
 
   const auth = useAuth();
 
