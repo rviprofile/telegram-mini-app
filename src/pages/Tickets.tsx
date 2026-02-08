@@ -22,7 +22,7 @@ export const Tickets = () => {
     <VStack
       minH={"calc(100dvh - 60px)"}
       w={"100%"}
-      padding={"20px"}
+      padding={"20px 20px 0 20px"}
       gap={"12px"}
     >
       <PageHeader title="БИЛЕТЫ" />
@@ -46,7 +46,9 @@ export const Tickets = () => {
       )}
 
       <HeaderCounterCard />
+
       <YourTicketsColumn tickets={tickets} isLoading={isLoading} />
+
       <NavMenu />
     </VStack>
   );
