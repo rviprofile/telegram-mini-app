@@ -1,22 +1,19 @@
-import { Button, Text, VStack } from "@chakra-ui/react";
-import { withMask } from "use-mask-input";
+import { Button, HStack, Image, Input, Text, VStack } from "@chakra-ui/react";
 import * as S from "./PaymentForm.styles";
 import { FormProvider, useForm } from "react-hook-form";
-import type { Step } from "../../pages/Payment";
+
+import { useState } from "react";
+import type { Step } from "../../pages/Buy";
 
 type FormValues = {
   email: string;
   phone: string;
 };
 
-export const PaymentForm = ({
-  setStep,
-}: {
-  setStep: React.Dispatch<React.SetStateAction<Step>>;
-}) => {
+export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
   const methods = useForm<FormValues>({});
-  const { register, handleSubmit } = methods;
-  const phoneRegister = register("phone");
+  const { handleSubmit } = methods;
+  const [ticketsCount, setTicketsCount] = useState<number>(1);
   const onSubmit = (data: FormValues) => {
     console.log(data);
   };
@@ -24,75 +21,79 @@ export const PaymentForm = ({
     <FormProvider {...methods}>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <Text>Заказ №12345</Text>
-        <VStack gap={"8px"} margin={"16px 0"} align={"start"}>
+        <VStack gap={"32px"} margin={"32px 0 16px 0 "} align={"start"}>
+          <HStack w={"100%"} justify={"space-between"}>
+            <Button
+              borderRadius={8}
+              size={"xl"}
+              w={"48px"}
+              padding={0}
+              bg={"#1d5989"}
+              _active={{ background: "#2b6da3" }}
+              onClick={() =>
+                ticketsCount > 1 && setTicketsCount((prev) => prev - 1)
+              }
+            >
+              <Image src={"/icons/minus.svg"} width={"26px"} />
+            </Button>
+            <Input
+              padding={"0 16px"}
+              fontSize={"30px"}
+              border={"2px dashed #505050"}
+              height={"48px"}
+              w={"100%"}
+              textAlign={"center"}
+              alignItems={"center"}
+              borderRadius={8}
+              value={ticketsCount}
+              type={"number"}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setTicketsCount(value);
+              }}
+              onBlur={() => {
+                ticketsCount < 1 && setTicketsCount(1);
+              }}
+            />
+            <Button
+              borderRadius={8}
+              size={"xl"}
+              w={"48px"}
+              padding={0}
+              bg={"#4e3884"}
+              _active={{ background: "#6a51ac" }}
+              onClick={() => setTicketsCount((prev) => prev + 1)}
+            >
+              <Image src={"/icons/plus.svg"} width={"26px"} />
+            </Button>
+          </HStack>
           <Text>
-            <span className="secondary">Сумма: </span>500 ₽
-          </Text>
-          <Text>
-            <span className="secondary">Провайдер: </span>Т-Банк
-          </Text>
-          <Text>
-            <span className="secondary">Время: </span>14:32
+            <span className="secondary">Сумма: </span>
+            {ticketsCount * 500} ₽
           </Text>
         </VStack>{" "}
-        <VStack gap={"8px"} marginBottom={"18px"}>
-          <S.FormInput
-            placeholder="Email"
-            type="email"
-            {...register("email", {
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Некорректный email",
-              },
-            })}
-          />
-          <S.FormInput
-            placeholder="Телефон"
-            {...phoneRegister}
-            ref={(el) => {
-              phoneRegister.ref(el);
-              withMask("+7 (999) 999-99-99")(el);
-            }}
-          />
-        </VStack>
         <VStack gap={"8px"}>
           <Button
             size={"xl"}
             borderRadius={8}
-            color={"black"}
-            bg={"#BDF35D"}
+            color={"white"}
+            bg={"#241a4d"}
             h={"42px"}
             width={"100%"}
-            padding={"9px 16px"}
+            padding={"0px 16px"}
             type="submit"
-            onClick={() =>  setStep("success")}
+            onClick={() => setStep("check")}
           >
-            Перейти к оплте (Т-Банк)
-          </Button>
-          <Button
-            size={"xl"}
-            borderRadius={8}
-            color={"black"}
-            bg={"transparent"}
-            border={"1px solid rgba(204, 207, 222, 1)"}
-            h={"42px"}
-            width={"100%"}
-            padding={"9px 16px"}
-            onClick={() => {}}
-          >
-            Открыть чек
+            Перейти к оплате
+            <Image
+              src={"/icons/SBP.svg"}
+              width={"26px"}
+              height={"32px"}
+              marginLeft={"10px"}
+            />
           </Button>
         </VStack>
       </S.Form>
-
-      <Text
-        fontWeight={"400"}
-        fontSize={"12px"}
-        color={"rgba(117, 129, 171, 1)"}
-      >
-        {" "}
-        Статус обновится автоматически{" "}
-      </Text>
     </FormProvider>
   );
 };

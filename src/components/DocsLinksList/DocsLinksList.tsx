@@ -8,7 +8,7 @@ export const DocsLinksList = () => {
         Правила акции <Image src={`/icons/chevron-left.svg`} />
       </S.DocLink>
       <S.DocLink>
-        Организатор и реквезиты ООО <Image src={`/icons/chevron-left.svg`} />
+        Организатор и реквизиты ООО <Image src={`/icons/chevron-left.svg`} />
       </S.DocLink>
       <S.DocLink>
         Политика обработки данных <Image src={`/icons/chevron-left.svg`} />

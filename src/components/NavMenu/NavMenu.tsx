@@ -45,9 +45,9 @@ export const NavMenu = () => {
       name: "people",
     },
     {
-      link: "/profile",
-      title: "Профиль",
-      name: "profile",
+      link: "/docs",
+      title: "Документы",
+      name: "docs",
     },
   ];
 
@@ -64,6 +64,7 @@ export const NavMenu = () => {
               src={`/icons/nav/${item.name}${
                 path === item.link ? "_selected" : ""
               }.svg`}
+              width={'24px'}
             />
             {item.title}
           </S.LinkButton>

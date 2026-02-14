@@ -31,6 +31,7 @@ export const YourTicketsColumn = ({
           height={"34px"}
           opacity={"0.3"}
           borderRadius={"16px"}
+          marginRight={'auto'}
         />
       ) : (
         <HStack gap={"8px"} justify={"start"} width={"100%"}>
