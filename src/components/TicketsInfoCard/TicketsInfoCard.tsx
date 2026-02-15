@@ -61,7 +61,7 @@ export const TicketsInfoCard = () => {
           padding={"9px 16px"}
           onClick={() => navigate("/buy")}
         >
-          Увеличить участие
+          Купить билеты
         </Button>
         <Button
           size={"xl"}
@@ -72,7 +72,7 @@ export const TicketsInfoCard = () => {
           h={"42px"}
           width={"100%"}
           padding={"9px 16px"}
-          onClick={() => navigate("/rules")}
+          onClick={() => navigate("/docs")}
         >
           Правила
         </Button>

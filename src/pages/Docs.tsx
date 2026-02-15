@@ -2,8 +2,10 @@ import { Button, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { PageHeader } from "../components/PageHeader/PageHeader";
 import { DocsLinksList } from "../components/DocsLinksList/DocsLinksList";
+import { useNavigate } from "react-router-dom";
 
 export const Docs = () => {
+  const navigate = useNavigate();
   return (
     <VStack
       minH={"calc(100dvh - 70px)"}
@@ -11,7 +13,7 @@ export const Docs = () => {
       gap={"16px"}
       padding={"0 16px"}
     >
-      <PageHeader title="ДОКУМЕНТЫ" onPrev={() => {}} />
+      <PageHeader title="ДОКУМЕНТЫ" onPrev={() => navigate(-1)} />
       <DocsLinksList />
       <Button
         style={{

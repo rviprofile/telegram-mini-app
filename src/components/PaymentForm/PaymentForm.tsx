@@ -3,7 +3,7 @@ import * as S from "./PaymentForm.styles";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useState } from "react";
-import type { Step } from "../../pages/Buy";
+import { Step } from "../../pages/Buy";
 
 type FormValues = {
   email: string;
@@ -82,7 +82,7 @@ export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
             width={"100%"}
             padding={"0px 16px"}
             type="submit"
-            onClick={() => setStep("check")}
+            onClick={() => setStep(Step.Check)}
           >
             Перейти к оплате
             <Image

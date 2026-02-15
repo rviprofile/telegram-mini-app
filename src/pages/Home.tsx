@@ -54,10 +54,10 @@ export const Home = () => {
       <ActionTicketsCard />
 
       <HStack>
-        <Link className={"default"} to={"/rules"}>
+        <Link className={"default"} to={"/docs"}>
           Как определяется победитель
         </Link>
-        <Link className={"default"} to={"/rules"}>
+        <Link className={"default"} to={"/docs"}>
           Правила
         </Link>
       </HStack>

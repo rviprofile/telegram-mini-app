@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const DocLink = styled.div`
+export const DocLink = styled(Link)`
   font-family: Inter;
   font-weight: 400;
   font-style: Regular;
