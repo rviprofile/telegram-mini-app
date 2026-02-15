@@ -3,6 +3,7 @@ import type { TicketsList } from "../../api/types";
 import * as S from "./YourTicketsColumn.styles";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LinkToChannelCard } from "../LinkToChannelCard/LinkToChannelCard";
 
 const Filter = {
   All: "all",
@@ -58,7 +59,7 @@ export const YourTicketsColumn = ({
             onClick={() => {
               navigator.share({
                 title: `Розыгрыш автомобиля!`,
-                text: 'Покупай билеты, учавствуй в розыгрыше, следи за результатами',
+                text: "Покупай билеты, учавствуй в розыгрыше, следи за результатами",
                 url: "https://t.me/VoshodLotteryBot?startapp=ref_777",
               });
             }}
@@ -122,8 +123,8 @@ export const YourTicketsColumn = ({
         gap={"8px"}
         w={"calc(100% + 40px)"}
         padding={"0 20px 20px 20px"}
+        marginBottom={"104px"}
         align={"start"}
-        maxHeight={"calc(100vh - 370px)"}
         onScroll={handleScroll}
         overflow={"auto"}
         boxShadow={
@@ -157,6 +158,7 @@ export const YourTicketsColumn = ({
                 </S.Tiket>
               );
             })}
+        <LinkToChannelCard />
       </VStack>
     </>
   );

@@ -24,11 +24,11 @@ export const useTelegram = () => {
   const [startParam, setStartParam] = useState<any | null>(null);
 
   useEffect(() => {
-    const launchParams = retrieveLaunchParams();
-    const initDataRaw = retrieveRawInitData();
-    setTg(launchParams);
-    setInitData(initDataRaw);
-    setStartParam(launchParams.tgWebAppStartParam ?? launchParams.start_param);
+    // const launchParams = retrieveLaunchParams();
+    // const initDataRaw = retrieveRawInitData();
+    // setTg(launchParams);
+    // setInitData(initDataRaw);
+    // setStartParam(launchParams.tgWebAppStartParam ?? launchParams.start_param);
   }, []);
 
   return { tg, initData, startParam };

@@ -6,8 +6,10 @@ import type { TicketsList } from "../api/types";
 import API from "../api";
 import { YourTicketsColumn } from "../components/YourTicketsColumn/YourTicketsColumn";
 import { HeaderCounterCard } from "../components/HeaderCounterCard/HeaderCounterCard";
+import { useNavigate } from "react-router-dom";
 
 export const Tickets = () => {
+  const navigate = useNavigate();
   const { data: tickets, isLoading } = useQuery({
     queryKey: ["ticket/list"],
     queryFn: async (): Promise<TicketsList> => {
@@ -21,12 +23,13 @@ export const Tickets = () => {
   return (
     <VStack
       minH={"calc(100dvh - 60px)"}
+      maxH={"calc(100dvh - 60px)"}
       w={"100%"}
+      gap={"16px"}
       padding={"20px 20px 0 20px"}
-      gap={"12px"}
     >
-      <PageHeader title="БИЛЕТЫ" />
-      {isLoading ? (
+      <PageHeader title="Билеты" onPrev={() => navigate("/")} />
+      {!isLoading ? (
         <Skeleton
           variant="shine"
           opacity={"0.3"}
@@ -50,7 +53,6 @@ export const Tickets = () => {
       <HeaderCounterCard />
 
       <YourTicketsColumn tickets={tickets} isLoading={isLoading} />
-
       <NavMenu />
     </VStack>
   );

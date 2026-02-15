@@ -1,4 +1,4 @@
-import { HStack, VStack } from "@chakra-ui/react";
+import { HStack, Skeleton, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { Capsule } from "../components/Capsule/Capsule";
 import { PrizePreviewCard } from "../components/PrizePreviewCard/PrizePreviewCard";
@@ -10,7 +10,7 @@ import type { LotteryProgress } from "../api/types";
 import API from "../api";
 
 export const Home = () => {
-  const { data: progress } = useQuery({
+  const { data: progress, isLoading } = useQuery({
     queryKey: ["progress"],
     queryFn: async (): Promise<LotteryProgress> => {
       return await API.get("/progress");
@@ -47,7 +47,11 @@ export const Home = () => {
   };
   return (
     <VStack minH={"calc(100dvh - 60px)"} w={"100%"} padding={"20px"}>
-      <Capsule text={getStatus().text} color={getStatus().color} />
+      {isLoading ? (
+        <Skeleton h={"25px"} w={"90px"} borderRadius={"16px"} opacity={"0.3"}/>
+      ) : (
+        <Capsule text={getStatus().text} color={getStatus().color} />
+      )}
       <h1>Розыгрыш автомобиля</h1>
       <PrizePreviewCard />
       <CounterCard />
