@@ -20,7 +20,7 @@ export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
   return (
     <FormProvider {...methods}>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <Text>Заказ №12345</Text>
+        <Text>Покупка №12345</Text>
         <VStack gap={"32px"} margin={"32px 0 16px 0 "} align={"start"}>
           <HStack w={"100%"} justify={"space-between"}>
             <Button
@@ -39,7 +39,7 @@ export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
             <Input
               padding={"0 16px"}
               fontSize={"30px"}
-              border={"2px dashed #505050"}
+              border={"2px dashed #50505077"}
               height={"48px"}
               w={"100%"}
               textAlign={"center"}

@@ -4,6 +4,7 @@ import * as S from "./RefsCounter.styles";
 export const RefsCounter = () => {
   const sended = 10;
   const aprooved = 7;
+  const tickets = 1;
   const isLoading = false;
   if (isLoading) {
     return (
@@ -20,7 +21,7 @@ export const RefsCounter = () => {
     <S.CardContainer>
       <Slider.Root value={[aprooved]} max={sended}>
         <HStack>
-          <p className="segment">Билетов за рефералов:</p>
+          <p className="segment">Защитано:</p>
           <p className="value">
             {aprooved.toLocaleString("ru-RU")} /{" "}
             {sended.toLocaleString("ru-RU")}
@@ -38,7 +39,7 @@ export const RefsCounter = () => {
       </Slider.Root>
       <HStack>
         <p className="segment">Билетов за рефералов:</p>
-        <p className="value">{aprooved.toLocaleString("ru-RU")}</p>
+        <p className="value">{tickets.toLocaleString("ru-RU")}</p>
       </HStack>
     </S.CardContainer>
   );

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Status } from "./RefsListCard";
 
 export const Container = styled.div`
   width: 100%;
@@ -77,7 +78,7 @@ export const Ref = styled.div`
 `;
 
 export const StatusCapsule = styled.div<{
-  status: "valid" | "pending" | "rejected";
+  status: Status | string;
 }>`
   padding: 4px 8px;
   color: rgba(31, 38, 61, 1);
@@ -93,11 +94,11 @@ export const StatusCapsule = styled.div<{
   border-radius: 16px;
   ${({ status }) => {
     switch (status) {
-      case "valid":
+      case Status.Correct:
         return "background: rgba(150, 255, 181, 1)";
-      case "pending":
-        return "background: rgba(185, 132, 73, 1)";
-      case "rejected":
+      case Status.Sended:
+        return "background: rgb(207, 155, 96)";
+      default:
         return "background: rgba(220, 68, 107, 1)";
     }
   }}

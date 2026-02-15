@@ -1,6 +1,13 @@
 import { HStack, Image, Skeleton, VStack } from "@chakra-ui/react";
 import * as S from "./RefsListCard.styles";
 
+export const Status = {
+  Sended: "sended",
+  Correct: "correct",
+} as const;
+
+export type Status = (typeof Status)[keyof typeof Status];
+
 export const RefsListCard = () => {
   const isLoading = false;
   if (isLoading) {
@@ -36,7 +43,9 @@ export const RefsListCard = () => {
               <p className="secondary">приглашённый</p>
             </VStack>
           </HStack>
-          <S.StatusCapsule status="valid">VALID</S.StatusCapsule>
+          <S.StatusCapsule status={Status.Correct}>
+            {Status.Sended && "В теме"}
+          </S.StatusCapsule>
         </S.Ref>
         <S.Ref>
           <HStack gap={"8px"}>
@@ -53,7 +62,7 @@ export const RefsListCard = () => {
               <p className="secondary">приглашённый</p>
             </VStack>
           </HStack>
-          <S.StatusCapsule status="pending">PENDING</S.StatusCapsule>
+          <S.StatusCapsule status={Status.Sended}>Отправлено</S.StatusCapsule>
         </S.Ref>
         <S.Ref>
           <HStack gap={"8px"}>

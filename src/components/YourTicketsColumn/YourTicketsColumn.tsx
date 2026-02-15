@@ -1,7 +1,16 @@
-import { HStack, Skeleton, VStack } from "@chakra-ui/react";
+import { Button, HStack, Skeleton, VStack } from "@chakra-ui/react";
 import type { TicketsList } from "../../api/types";
 import * as S from "./YourTicketsColumn.styles";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Filter = {
+  All: "all",
+  Buy: "buy",
+  Refs: "refs",
+} as const;
+
+type Filter = (typeof Filter)[keyof typeof Filter];
 
 export const YourTicketsColumn = ({
   tickets,
@@ -10,17 +19,56 @@ export const YourTicketsColumn = ({
   tickets?: TicketsList;
   isLoading: boolean;
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState<"all" | "buy" | "refs">(
-    "all",
-  );
+  const [selectedFilter, setSelectedFilter] = useState<Filter>(Filter.All);
   const [isScrolled, setIsScrolled] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (scrollRef.current) {
       setIsScrolled(scrollRef.current.scrollTop > 0);
     }
   };
+
+  if (!isLoading && !tickets) {
+    return (
+      <S.CardContainer>
+        <h2>У вас пока нет билетов</h2>
+        <HStack maxW={"100%"} gap={"8px"}>
+          <Button
+            size={"xl"}
+            borderRadius={8}
+            color={"black"}
+            bg={"#BDF35D"}
+            h={"42px"}
+            w={"calc(50% - 4px)"}
+            padding={"9px 16px"}
+            onClick={() => navigate("/buy")}
+          >
+            Купить билет
+          </Button>
+          <Button
+            size={"xl"}
+            borderRadius={8}
+            color={"white"}
+            bg={"#F74A78"}
+            h={"42px"}
+            w={"calc(50% - 4px)"}
+            padding={"9px 16px"}
+            onClick={() => {
+              navigator.share({
+                title: `Розыгрыш автомобиля!`,
+                text: 'Покупай билеты, учавствуй в розыгрыше, следи за результатами',
+                url: "https://t.me/VoshodLotteryBot?startapp=ref_777",
+              });
+            }}
+          >
+            Пригласить друга
+          </Button>
+        </HStack>
+      </S.CardContainer>
+    );
+  }
 
   return (
     <>
@@ -31,13 +79,13 @@ export const YourTicketsColumn = ({
           height={"34px"}
           opacity={"0.3"}
           borderRadius={"16px"}
-          marginRight={'auto'}
+          marginRight={"auto"}
         />
       ) : (
         <HStack gap={"8px"} justify={"start"} width={"100%"}>
           <S.FilterTab
-            selected={selectedFilter === "all"}
-            onClick={() => setSelectedFilter("all")}
+            selected={selectedFilter === Filter.All}
+            onClick={() => setSelectedFilter(Filter.All)}
           >
             Все
           </S.FilterTab>
@@ -49,8 +97,8 @@ export const YourTicketsColumn = ({
             /
           </p>
           <S.FilterTab
-            selected={selectedFilter === "buy"}
-            onClick={() => setSelectedFilter("buy")}
+            selected={selectedFilter === Filter.Buy}
+            onClick={() => setSelectedFilter(Filter.Buy)}
           >
             Покупки
           </S.FilterTab>
@@ -62,8 +110,8 @@ export const YourTicketsColumn = ({
             /
           </p>
           <S.FilterTab
-            selected={selectedFilter === "refs"}
-            onClick={() => setSelectedFilter("refs")}
+            selected={selectedFilter === Filter.Refs}
+            onClick={() => setSelectedFilter(Filter.Refs)}
           >
             Рефералы
           </S.FilterTab>

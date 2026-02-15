@@ -35,14 +35,16 @@ export const Tickets = () => {
           marginRight={"auto"}
         />
       ) : (
-        <Text
-          fontWeight={"500"}
-          fontSize={"14px"}
-          w={"100%"}
-          textAlign={"start"}
-        >
-          Ваши билеты в текущей акции: {totalTickets}
-        </Text>
+        totalTickets && (
+          <Text
+            fontWeight={"500"}
+            fontSize={"14px"}
+            w={"100%"}
+            textAlign={"start"}
+          >
+            Ваши билеты в текущей акции: {totalTickets}
+          </Text>
+        )
       )}
 
       <HeaderCounterCard />
