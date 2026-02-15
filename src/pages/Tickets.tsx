@@ -29,7 +29,7 @@ export const Tickets = () => {
       padding={"20px 20px 0 20px"}
     >
       <PageHeader title="Билеты" onPrev={() => navigate("/")} />
-      {!isLoading ? (
+      {isLoading ? (
         <Skeleton
           variant="shine"
           opacity={"0.3"}
