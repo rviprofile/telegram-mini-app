@@ -10,6 +10,7 @@ export const Tiket = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
 
   div.title {
     display: flex;
@@ -110,6 +111,9 @@ export const StatusCapsule = styled.div<{
   text-align: right;
   text-transform: uppercase;
   border-radius: 16px;
+  position: absolute;
+  right: 16px;
+  top: 10px;
   ${({ source }) => {
     switch (source) {
       case Source.Buy:

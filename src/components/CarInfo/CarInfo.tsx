@@ -8,7 +8,11 @@ export const CarInfo = ({ cardetail }: { cardetail: CarDetail }) => {
       {cardetail.props.map((prop) => {
         return (
           <S.InfoItem>
-            <Image src={prop.ico} width={"20px"} height={"20px"} />
+            <Image
+              src={`/icons/car/${prop.code}.svg`}
+              width={"20px"}
+              height={"20px"}
+            />
             <VStack align={"flex-start"}>
               <p className="title">{prop.name}</p>
               <p className="value">{prop.value}</p>
