@@ -30,6 +30,7 @@ export const PaymentForm = ({
   };
   const { data: paymentcreateresult, refetch: paymentcreate } = useQuery({
     queryKey: ["transaction/create"],
+    enabled: false,
     queryFn: async (): Promise<CreatePaymentResult> => {
       return await API.post("/transaction/create", { count: ticketsCount });
     },
