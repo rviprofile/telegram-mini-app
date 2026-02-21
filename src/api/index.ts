@@ -48,7 +48,7 @@ apiClient.interceptors.response.use(
     // Проверяем кастомную ошибку API
     if (
       response.data?.error === "Не указан токен авторизации" ||
-      "Невалидный токен авторизации"
+      response.data?.error === "Невалидный токен авторизации"
     ) {
       const originalRequest = response.config;
 
