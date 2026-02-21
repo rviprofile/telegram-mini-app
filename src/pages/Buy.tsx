@@ -18,7 +18,7 @@ export const Step = {
 export type Step = (typeof Step)[keyof typeof Step];
 
 export const Buy = () => {
-  const [step, setStep] = useState<Step>(Step.Check);
+  const [step, setStep] = useState<Step>(Step.Payment);
   const [createPaymetResult, setCreatePaymentResult] =
     useState<CreatePaymentResult | null>(null);
   const transactionId = createPaymetResult?.id;
