@@ -36,6 +36,11 @@ export const Buy = () => {
       query.state.data?.status !== "create" ? false : 1000,
   });
 
+  useEffect(
+    () => console.log(transactionCompleteData),
+    [transactionCompleteData],
+  );
+
   const getStep = () => {
     switch (step) {
       case Step.Payment:

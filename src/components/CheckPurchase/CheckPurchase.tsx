@@ -1,4 +1,4 @@
-import { Button, Grid, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Text, VStack } from "@chakra-ui/react";
 import * as S from "./CheckPurchasestyles";
 import { useNavigate } from "react-router-dom";
 
