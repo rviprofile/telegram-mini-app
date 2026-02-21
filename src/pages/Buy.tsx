@@ -31,15 +31,23 @@ export const Buy = () => {
       );
       return res;
     },
-    enabled: false,
-    refetchInterval: (query) =>
-      query.state.data?.status !== "create" ? false : 1000,
+    enabled: step === Step.Check,
+    refetchInterval: () => 1000,
   });
 
-  useEffect(
-    () => console.log(transactionCompleteData),
-    [transactionCompleteData],
-  );
+  useEffect(() => {
+    if (Boolean(transactionId)) {
+      setStep(Step.Check);
+    }
+    if (transactionCompleteData?.status === "success") {
+      setCreatePaymentResult(null);
+      setStep(Step.Success);
+    }
+    if (transactionCompleteData?.status === "error") {
+      setCreatePaymentResult(null);
+      setStep(Step.Error);
+    }
+  }, [transactionId, transactionCompleteData]);
 
   const getStep = () => {
     switch (step) {
