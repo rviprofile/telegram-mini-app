@@ -55,3 +55,10 @@ export type DocsList = {
   code: string;
   title: string;
 }[];
+
+export type DocDetail = {
+  id: 47;
+  code: string;
+  title: string;
+  text: string;
+};

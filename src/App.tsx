@@ -11,7 +11,7 @@ import { Payment } from "./pages/Payment";
 import { Refs } from "./pages/Refs";
 import { AuthProvider } from "./components/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Rules } from "./pages/docs/Rules";
+import { DocPage } from "./pages/docs/DocPage";
 
 const tg = window.Telegram?.WebApp;
 const queryClient = new QueryClient();
@@ -39,7 +39,7 @@ function App() {
               <Route path="winner-selection" element={<Docs />} />
               <Route path="prize-receiving-procedure" element={<Docs />} />
             </Route>
-            <Route path="/docs/rules" element={<Rules />} />
+            <Route path="/docs/:page" element={<DocPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

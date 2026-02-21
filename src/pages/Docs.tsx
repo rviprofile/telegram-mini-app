@@ -11,7 +11,7 @@ export const Docs = () => {
   const navigate = useNavigate();
 
   const { data: docsList, isLoading } = useQuery({
-    queryKey: ["ticket/list"],
+    queryKey: ["document/list"],
     queryFn: async (): Promise<DocsList> => {
       return await API.get("/document/list");
     },
