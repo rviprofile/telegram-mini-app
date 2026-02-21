@@ -14,7 +14,6 @@ type FormValues = {
 };
 
 export const PaymentForm = ({
-  setStep,
   setCreatePaymentResult,
 }: {
   setStep: (step: Step) => void;
@@ -35,9 +34,7 @@ export const PaymentForm = ({
   useEffect(() => {
     if (paymentcreateresult?.success) {
       setCreatePaymentResult(paymentcreateresult);
-    } else {
-      setStep(Step.Error);
-    }
+    } 
   }, [paymentcreateresult]);
 
   return (
@@ -104,7 +101,6 @@ export const PaymentForm = ({
             h={"42px"}
             width={"100%"}
             padding={"0px 16px"}
-            type="submit"
             onClick={() => paymentcreate()}
           >
             Перейти к оплате
