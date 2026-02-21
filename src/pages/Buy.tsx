@@ -31,7 +31,7 @@ export const Buy = () => {
       );
       return res;
     },
-    enabled: Boolean(transactionId),
+    enabled: false,
     refetchInterval: (query) =>
       query.state.data?.status !== "create" ? false : 1000,
   });
@@ -80,10 +80,6 @@ export const Buy = () => {
         return "/icons/error.svg";
     }
   };
-
-  useEffect(() => {
-    console.log(createPaymetResult);
-  }, [createPaymetResult]);
 
   return (
     <VStack

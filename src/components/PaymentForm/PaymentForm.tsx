@@ -23,11 +23,7 @@ export const PaymentForm = ({
   >;
 }) => {
   const methods = useForm<FormValues>({});
-  const { handleSubmit } = methods;
   const [ticketsCount, setTicketsCount] = useState<number>(1);
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-  };
   const { data: paymentcreateresult, refetch: paymentcreate } = useQuery({
     queryKey: ["transaction/create"],
     enabled: false,
@@ -46,7 +42,7 @@ export const PaymentForm = ({
 
   return (
     <FormProvider {...methods}>
-      <S.Form onSubmit={handleSubmit(onSubmit)}>
+      <S.Form onSubmit={() => {}}>
         <Text>Покупка №12345</Text>
         <VStack gap={"32px"} margin={"32px 0 16px 0 "} align={"start"}>
           <HStack w={"100%"} justify={"space-between"}>
