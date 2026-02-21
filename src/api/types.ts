@@ -62,3 +62,20 @@ export type DocDetail = {
   title: string;
   text: string;
 };
+
+export type Referal = {
+  id: number | string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  status: string;
+};
+
+export type ReferalList = Referal[];
+
+export type ReferalStats = {
+  referalTicketCount: number;
+  userCount: number;
+  collectedToNext: number;
+  targetToNext: number;
+};

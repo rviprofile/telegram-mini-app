@@ -1,11 +1,14 @@
 import { HStack, Skeleton, Slider } from "@chakra-ui/react";
 import * as S from "./RefsCounter.styles";
+import type { ReferalStats } from "../../api/types";
 
-export const RefsCounter = () => {
-  const sended = 10;
-  const aprooved = 7;
-  const tickets = 1;
-  const isLoading = false;
+export const RefsCounter = ({
+  stat,
+  isLoading,
+}: {
+  stat?: ReferalStats;
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <Skeleton
@@ -17,14 +20,17 @@ export const RefsCounter = () => {
       />
     );
   }
+  if (!stat) {
+    return null;
+  }
   return (
     <S.CardContainer>
-      <Slider.Root value={[aprooved]} max={sended}>
+      <Slider.Root value={[stat?.userCount]} max={stat?.targetToNext}>
         <HStack>
           <p className="segment">Защитано:</p>
           <p className="value">
-            {aprooved.toLocaleString("ru-RU")} /{" "}
-            {sended.toLocaleString("ru-RU")}
+            {stat?.userCount?.toLocaleString("ru-RU")} /{" "}
+            {stat?.targetToNext?.toLocaleString("ru-RU")}
           </p>
         </HStack>
         <Slider.Control>
@@ -39,7 +45,9 @@ export const RefsCounter = () => {
       </Slider.Root>
       <HStack>
         <p className="segment">Билетов за рефералов:</p>
-        <p className="value">{tickets.toLocaleString("ru-RU")}</p>
+        <p className="value">
+          {stat.referalTicketCount.toLocaleString("ru-RU")}
+        </p>
       </HStack>
     </S.CardContainer>
   );

@@ -94,12 +94,12 @@ export const StatusCapsule = styled.div<{
   border-radius: 16px;
   ${({ status }) => {
     switch (status) {
-      case Status.Correct:
+      case Status.Active:
         return "background: rgba(150, 255, 181, 1)";
       case Status.Sended:
         return "background: rgb(207, 155, 96)";
       default:
-        return "background: rgba(220, 68, 107, 1)";
+        return "background: rgb(207, 155, 96)";
     }
   }}
 `;

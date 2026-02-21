@@ -1,15 +1,24 @@
 import { HStack, Image, Skeleton, VStack } from "@chakra-ui/react";
 import * as S from "./RefsListCard.styles";
+import type { ReferalList, ReferalStats } from "../../api/types";
+import { pluralizeRu } from "../../utils/pluralizeRu";
 
 export const Status = {
   Sended: "sended",
-  Correct: "correct",
+  Active: "active",
 } as const;
 
 export type Status = (typeof Status)[keyof typeof Status];
 
-export const RefsListCard = () => {
-  const isLoading = false;
+export const RefsListCard = ({
+  refs,
+  stats,
+  isLoading,
+}: {
+  refs?: ReferalList;
+  stats?: ReferalStats;
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <Skeleton
@@ -21,66 +30,47 @@ export const RefsListCard = () => {
       />
     );
   }
+
   return (
     <S.Container>
-      <VStack className="header" align={"start"}>
-        <p>До следующего билета:</p>
-        <p className="header_value">3 приглашённых</p>
-      </VStack>
+      {stats && (
+        <VStack className="header" align={"start"}>
+          <p>До следующего билета:</p>
+          <p className="header_value">
+            {stats?.collectedToNext}{" "}
+            {pluralizeRu(
+              stats?.collectedToNext,
+              "приглашенный",
+              "приглашенных",
+              "приглашенных",
+            )}
+          </p>
+        </VStack>
+      )}
       <S.Content>
-        <S.Ref>
-          <HStack gap={"8px"}>
-            <Image
-              src={""}
-              width={"36px"}
-              height={"36px"}
-              borderRadius={"20px"}
-              background={"rgba(163, 165, 169, 0.5)"}
-              border={"none"}
-            />
-            <VStack align={"start"}>
-              <p className="primary">Фамилия</p>
-              <p className="secondary">приглашённый</p>
-            </VStack>
-          </HStack>
-          <S.StatusCapsule status={Status.Correct}>
-            {Status.Sended && "В теме"}
-          </S.StatusCapsule>
-        </S.Ref>
-        <S.Ref>
-          <HStack gap={"8px"}>
-            <Image
-              src={""}
-              width={"36px"}
-              height={"36px"}
-              borderRadius={"20px"}
-              background={"rgba(163, 165, 169, 0.5)"}
-              border={"none"}
-            />
-            <VStack align={"start"}>
-              <p className="primary">Фамилия</p>
-              <p className="secondary">приглашённый</p>
-            </VStack>
-          </HStack>
-          <S.StatusCapsule status={Status.Sended}>Отправлено</S.StatusCapsule>
-        </S.Ref>
-        <S.Ref>
-          <HStack gap={"8px"}>
-            <Image
-              src={""}
-              width={"36px"}
-              height={"36px"}
-              borderRadius={"20px"}
-              background={"rgba(163, 165, 169, 0.5)"}
-              border={"none"}
-            />
-            <VStack align={"start"}>
-              <p className="primary">Фамилия</p>
-              <p className="secondary">приглашённый</p>
-            </VStack>
-          </HStack>
-          <S.StatusCapsule status="rejected">REJECTED</S.StatusCapsule>
-        </S.Ref>
+        {refs?.map((ref) => {
+          return (
+            <S.Ref key={ref.id}>
+              <HStack gap={"8px"}>
+                <Image
+                  src={ref.avatar}
+                  width={"36px"}
+                  height={"36px"}
+                  borderRadius={"20px"}
+                  background={"rgba(163, 165, 169, 0.5)"}
+                  border={"none"}
+                />
+                <VStack align={"start"}>
+                  <p className="primary">{`${ref.firstName ?? ""} ${ref.lastName ?? ""}`}</p>
+                  <p className="secondary">приглашённый</p>
+                </VStack>
+              </HStack>
+              <S.StatusCapsule status={ref.status}>
+                {ref.status}
+              </S.StatusCapsule>
+            </S.Ref>
+          );
+        })}
       </S.Content>
     </S.Container>
   );
