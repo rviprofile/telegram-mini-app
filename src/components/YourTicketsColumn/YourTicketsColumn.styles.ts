@@ -89,3 +89,35 @@ export const CardContainer = styled.div`
     letter-spacing: 0%;
   }
 `;
+
+export const Source = {
+  Buy: "buy",
+  Referal: "referal",
+} as const;
+
+export const StatusCapsule = styled.div<{
+  source: typeof Source | string;
+}>`
+  padding: 4px 8px;
+  color: rgba(31, 38, 61, 1);
+  font-family: Inter;
+  font-weight: 600;
+  font-style: Semi Bold;
+  font-size: 12px;
+  leading-trim: NONE;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: right;
+  text-transform: uppercase;
+  border-radius: 16px;
+  ${({ source }) => {
+    switch (source) {
+      case Source.Buy:
+        return "background: rgba(150, 255, 181, 1)";
+      case Source.Referal:
+        return "background: rgb(207, 155, 96)";
+      default:
+        return "background: rgb(207, 155, 96)";
+    }
+  }}
+`;

@@ -1,10 +1,15 @@
 import { Button, Field, Grid, Input, Skeleton } from "@chakra-ui/react";
 import * as S from "./RefInputCard.styles";
 import { useState } from "react";
+import type { User } from "../../api/types";
 
-export const RefInputCard = () => {
-  const isLoading = false;
-
+export const RefInputCard = ({
+  user,
+  isLoading,
+}: {
+  user?: User;
+  isLoading: boolean;
+}) => {
   const [copyButtonText, setCopyButtonText] = useState<
     "Скопировать" | "Скопировано"
   >("Скопировать");
@@ -20,6 +25,11 @@ export const RefInputCard = () => {
       />
     );
   }
+  if (!user) {
+    return null;
+  }
+  const refLink = `https://t.me/VoshodLotteryBot?startapp=${user.referalCode}`;
+
   return (
     <S.Card>
       <Field.Root>
@@ -27,13 +37,9 @@ export const RefInputCard = () => {
         <div className="input-wrapper">
           <Input
             className="input-ref"
-            value={"https://t.me/VoshodLotteryBot?startapp=ref_777"}
+            value={refLink}
             onChange={() => {}}
-            onClick={() =>
-              navigator.clipboard.writeText(
-                "https://t.me/VoshodLotteryBot?startapp=ref_777",
-              )
-            }
+            onClick={() => navigator.clipboard.writeText(refLink)}
           />
         </div>
       </Field.Root>
@@ -43,9 +49,7 @@ export const RefInputCard = () => {
           width={"100%"}
           color={"white"}
           onClick={() => {
-            navigator.clipboard.writeText(
-              "https://t.me/VoshodLotteryBot?startapp=ref_777",
-            );
+            navigator.clipboard.writeText(refLink);
             setCopyButtonText("Скопировано");
             setTimeout(() => setCopyButtonText("Скопировать"), 3000);
           }}
@@ -59,7 +63,7 @@ export const RefInputCard = () => {
           onClick={() => {
             navigator.share({
               title: `Розыгрыш автомобиля!`,
-              url: "https://t.me/VoshodLotteryBot?startapp=ref_777",
+              url: refLink,
             });
           }}
         >

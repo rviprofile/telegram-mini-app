@@ -8,7 +8,7 @@ import { LinkToChannelCard } from "../LinkToChannelCard/LinkToChannelCard";
 const Filter = {
   All: "all",
   Buy: "buy",
-  Refs: "refs",
+  Refs: "referal",
 } as const;
 
 type Filter = (typeof Filter)[keyof typeof Filter];
@@ -147,17 +147,27 @@ export const YourTicketsColumn = ({
                 />
               );
             })
-          : tickets?.map((ticket) => {
-              return (
-                <S.Tiket>
-                  <div className="title">ID: {ticket.id}</div>
-                  <div className="date">
-                    <p>{ticket.purchaseDate.split(" ")[0]}</p>
-                    <p>{ticket.purchaseDate.split(" ")[1]}</p>
-                  </div>
-                </S.Tiket>
-              );
-            })}
+          : tickets
+              ?.filter(
+                (ticket) =>
+                  ticket.source === selectedFilter ||
+                  selectedFilter === Filter.All,
+              )
+              .map((ticket) => {
+                return (
+                  <S.Tiket>
+                    <div className="title">ID: {ticket.id}</div>
+                    <div className="date">
+                      <p>
+                        {new Date(ticket.purchaseDate).toLocaleString("ru-RU")}
+                      </p>
+                    </div>
+                    <S.StatusCapsule source={ticket.source}>
+                      {ticket.source === "buy" ? "Покупка" : "Реферал"}
+                    </S.StatusCapsule>
+                  </S.Tiket>
+                );
+              })}
         <LinkToChannelCard />
       </VStack>
     </>

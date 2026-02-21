@@ -7,10 +7,16 @@ import { RefsCounter } from "../components/RefsCounter/RefsCounter";
 import { RefsListCard } from "../components/RefsListCard/RefsListCard";
 import { useQuery } from "@tanstack/react-query";
 import API from "../api";
-import type { ReferalList, ReferalStats } from "../api/types";
+import type { ReferalList, ReferalStats, User } from "../api/types";
 
 export const Refs = () => {
   const navigate = useNavigate();
+  const { data: user, isLoading: isUserLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async (): Promise<User> => {
+      return await API.get("/user");
+    },
+  });
   const { data: stats, isLoading: isStatsLoading } = useQuery({
     queryKey: ["/ticket/stats/referal"],
     queryFn: async (): Promise<ReferalStats> => {
@@ -27,7 +33,7 @@ export const Refs = () => {
     <VStack minH={"calc(100dvh - 60px)"} w={"100%"} gap={"16px"}>
       <PageHeader title="Рефералы" onPrev={() => navigate("/")} />
       <VStack w={"100%"} padding={"0 16px"}>
-        <RefInputCard />
+        <RefInputCard user={user} isLoading={isUserLoading} />
         <RefsCounter isLoading={isStatsLoading} stats={stats} />
         <RefsListCard
           stats={stats}

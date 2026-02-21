@@ -40,12 +40,12 @@ export type LotteryProgress = {
 };
 
 export type Ticket = {
-  id: string | number;
-  carId: string | number;
-  purchaseDate: string;
+  id: number | string;
+  purchaseDate: string; // 2026-02-20T02:22:44+00:00
   ticketPrice: number;
   ticketCount: number;
   priceTotal: number;
+  source: "referal" | "buy";
 };
 
 export type TicketsList = Ticket[];
@@ -68,7 +68,7 @@ export type Referal = {
   firstName: string;
   lastName: string;
   avatar: string;
-  status: string;
+  status: "active" | "invited";
 };
 
 export type ReferalList = Referal[];
@@ -78,4 +78,26 @@ export type ReferalStats = {
   userCount: number;
   collectedToNext: number;
   targetToNext: number;
+};
+
+export type User = {
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  nickName: string;
+  referalCode: string;
+};
+
+export type CreatePaymentResult = {
+  success: boolean;
+  url: string;
+  id: string | number;
+};
+
+export type TransactionById = {
+  id: string | number;
+  createDate: string;
+  completeDate: string | null;
+  status: "create" | string;
+  price: number;
 };

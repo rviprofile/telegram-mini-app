@@ -66,7 +66,7 @@ export const RefsListCard = ({
                 </VStack>
               </HStack>
               <S.StatusCapsule status={ref.status}>
-                {ref.status}
+                {ref.status === "active" ? "В теме" : "Позвал"}
               </S.StatusCapsule>
             </S.Ref>
           );

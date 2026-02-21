@@ -2,21 +2,47 @@ import { Button, HStack, Image, Input, Text, VStack } from "@chakra-ui/react";
 import * as S from "./PaymentForm.styles";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Step } from "../../pages/Buy";
+import { useQuery } from "@tanstack/react-query";
+import API from "../../api";
+import type { CreatePaymentResult } from "../../api/types";
 
 type FormValues = {
   email: string;
   phone: string;
 };
 
-export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
+export const PaymentForm = ({
+  setStep,
+  setCreatePaymentResult,
+}: {
+  setStep: (step: Step) => void;
+  setCreatePaymentResult: React.Dispatch<
+    React.SetStateAction<CreatePaymentResult | null>
+  >;
+}) => {
   const methods = useForm<FormValues>({});
   const { handleSubmit } = methods;
   const [ticketsCount, setTicketsCount] = useState<number>(1);
   const onSubmit = (data: FormValues) => {
     console.log(data);
   };
+  const { data: paymentcreateresult, refetch: paymentcreate } = useQuery({
+    queryKey: ["transaction/create"],
+    queryFn: async (): Promise<CreatePaymentResult> => {
+      return await API.post("/transaction/create", { count: ticketsCount });
+    },
+  });
+
+  useEffect(() => {
+    if (paymentcreateresult?.success) {
+      setCreatePaymentResult(paymentcreateresult);
+    } else {
+      setStep(Step.Error);
+    }
+  }, [paymentcreateresult]);
+
   return (
     <FormProvider {...methods}>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +108,7 @@ export const PaymentForm = ({ setStep }: { setStep: (step: Step) => void }) => {
             width={"100%"}
             padding={"0px 16px"}
             type="submit"
-            onClick={() => setStep(Step.Check)}
+            onClick={() => paymentcreate()}
           >
             Перейти к оплате
             <Image

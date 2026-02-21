@@ -2,10 +2,10 @@ import { Button, HStack, Skeleton } from "@chakra-ui/react";
 import * as S from "./ActionTicketsCard.styles";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import type { TicketsList } from "../../api/types";
+import type { TicketsList, User } from "../../api/types";
 import API from "../../api";
 
-export const ActionTicketsCard = () => {
+export const ActionTicketsCard = ({ user }: { user: User | undefined }) => {
   const navigate = useNavigate();
   const { data: tickets, isLoading } = useQuery({
     queryKey: ["ticket/list"],
@@ -24,13 +24,14 @@ export const ActionTicketsCard = () => {
       />
     );
   }
-  if (!tickets) {
+  if (!tickets || !user) {
     return null;
   }
   const totalTickets = tickets.reduce(
     (sum, item) => sum + (item.ticketCount ?? 0),
     0,
   );
+  const refLink = `https://t.me/VoshodLotteryBot?startapp=${user?.referalCode}`;
   return (
     <S.CardContainer>
       <h2>
@@ -57,6 +58,12 @@ export const ActionTicketsCard = () => {
           h={"42px"}
           w={"calc(50% - 4px)"}
           padding={"9px 16px"}
+          onClick={() => {
+            navigator.share({
+              title: `Розыгрыш автомобиля!`,
+              url: refLink,
+            });
+          }}
         >
           Пригласить друга
         </Button>

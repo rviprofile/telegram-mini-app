@@ -30,7 +30,10 @@ export const DocPage = () => {
       padding={"0 16px"}
     >
       <PageHeader title="Правила" onPrev={() => navigate("/docs")} />
-      <Text textAlign={"start"}>{doc?.text}</Text>
+      <Text
+        textAlign="start"
+        dangerouslySetInnerHTML={{ __html: doc?.text || "" }}
+      />
       <NavMenu />
     </VStack>
   );

@@ -1,9 +1,12 @@
-import { Heading, Text, VStack } from "@chakra-ui/react";
+import { Heading, Loader, Text, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { Image as ChakraImage } from "@chakra-ui/react";
 import { PaymentForm } from "../components/PaymentForm/PaymentForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulPurchase";
+import { useQuery } from "@tanstack/react-query";
+import API from "../api";
+import type { CreatePaymentResult, TransactionById } from "../api/types";
 
 export const Step = {
   Payment: "payment",
@@ -15,21 +18,35 @@ export const Step = {
 export type Step = (typeof Step)[keyof typeof Step];
 
 export const Buy = () => {
-  const [step, setStep] = useState<Step>(Step.Success);
-  // const { data } = useQuery({
-  //   queryKey: ["payment-status", paymentId],
-  //   queryFn: () => getPaymentStatus(paymentId),
-  //   enabled: !!paymentId,
-  //   refetchInterval: (data) => {
-  //     if (!data) return 3000; // если еще нет ответа
-  //     if (data.status === "SUCCESS") return false; // остановить
-  //     return 3000; // иначе продолжать
-  //   },
-  // });
+  const [step, setStep] = useState<Step>(Step.Check);
+  const [createPaymetResult, setCreatePaymentResult] =
+    useState<CreatePaymentResult | null>(null);
+  const transactionId = createPaymetResult?.id;
+
+  const { data: transactionCompleteData } = useQuery<TransactionById>({
+    queryKey: ["transaction/complete", transactionId],
+    queryFn: async () => {
+      const res = await API.get<TransactionById>(
+        `/transaction/complete/${transactionId}`,
+      );
+      return res;
+    },
+    enabled: Boolean(transactionId),
+    refetchInterval: (query) =>
+      query.state.data?.status !== "create" ? false : 1000,
+  });
+
   const getStep = () => {
     switch (step) {
       case Step.Payment:
-        return <PaymentForm setStep={(step: Step) => setStep(step)} />;
+        return (
+          <PaymentForm
+            setStep={(step: Step) => setStep(step)}
+            setCreatePaymentResult={setCreatePaymentResult}
+          />
+        );
+      case Step.Check:
+        return <Loader width={"20vw"} height={"20vw"} />;
       case Step.Success:
         return <SuccessfulPurchase purchasedTickets={2} />;
     }
@@ -58,6 +75,11 @@ export const Buy = () => {
         return "/icons/error.svg";
     }
   };
+
+  useEffect(() => {
+    console.log(createPaymetResult);
+  }, [createPaymetResult]);
+
   return (
     <VStack
       minH={"calc(100dvh - 60px)"}
