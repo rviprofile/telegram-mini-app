@@ -3,10 +3,10 @@ import * as S from "./RefsCounter.styles";
 import type { ReferalStats } from "../../api/types";
 
 export const RefsCounter = ({
-  stat,
+  stats,
   isLoading,
 }: {
-  stat?: ReferalStats;
+  stats?: ReferalStats;
   isLoading: boolean;
 }) => {
   if (isLoading) {
@@ -20,17 +20,17 @@ export const RefsCounter = ({
       />
     );
   }
-  if (!stat) {
+  if (!stats) {
     return null;
   }
   return (
     <S.CardContainer>
-      <Slider.Root value={[stat?.userCount]} max={stat?.targetToNext}>
+      <Slider.Root value={[stats?.userCount]} max={stats?.targetToNext}>
         <HStack>
           <p className="segment">Защитано:</p>
           <p className="value">
-            {stat?.userCount?.toLocaleString("ru-RU")} /{" "}
-            {stat?.targetToNext?.toLocaleString("ru-RU")}
+            {stats?.userCount?.toLocaleString("ru-RU")} /{" "}
+            {stats?.targetToNext?.toLocaleString("ru-RU")}
           </p>
         </HStack>
         <Slider.Control>
@@ -46,7 +46,7 @@ export const RefsCounter = ({
       <HStack>
         <p className="segment">Билетов за рефералов:</p>
         <p className="value">
-          {stat.referalTicketCount.toLocaleString("ru-RU")}
+          {stats.referalTicketCount.toLocaleString("ru-RU")}
         </p>
       </HStack>
     </S.CardContainer>

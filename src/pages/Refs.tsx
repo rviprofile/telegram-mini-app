@@ -28,7 +28,7 @@ export const Refs = () => {
       <PageHeader title="Рефералы" onPrev={() => navigate("/")} />
       <VStack w={"100%"} padding={"0 16px"}>
         <RefInputCard />
-        <RefsCounter isLoading={isStatsLoading} />
+        <RefsCounter isLoading={isStatsLoading} stats={stats} />
         <RefsListCard
           stats={stats}
           isLoading={isStatsLoading || isRefsLoading}
