@@ -38,7 +38,7 @@ export const Buy = () => {
   useEffect(() => {
     if (transactionId && createPaymentResult?.url) {
       setStep(Step.Check);
-      window.location.href = createPaymentResult.url;
+      window.open(createPaymentResult.url, "_blank");
     }
   }, [transactionId, createPaymentResult]);
 
