@@ -26,7 +26,7 @@ export const Tickets = () => {
       maxH={"calc(100dvh - 60px)"}
       w={"100%"}
       gap={"16px"}
-      padding={"20px 20px 0 20px"}
+      padding={"0 20px 0 20px"}
     >
       <PageHeader title="Билеты" onPrev={() => navigate("/")} />
       {isLoading ? (

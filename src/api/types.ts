@@ -49,3 +49,9 @@ export type Ticket = {
 };
 
 export type TicketsList = Ticket[];
+
+export type DocsList = {
+  id: number;
+  code: string;
+  title: string;
+}[];

@@ -3,6 +3,7 @@ import { NavMenu } from "../components/NavMenu/NavMenu";
 import { Image as ChakraImage } from "@chakra-ui/react";
 import { PaymentForm } from "../components/PaymentForm/PaymentForm";
 import { useState } from "react";
+import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulPurchase";
 
 export const Step = {
   Payment: "payment",
@@ -14,7 +15,7 @@ export const Step = {
 export type Step = (typeof Step)[keyof typeof Step];
 
 export const Buy = () => {
-  const [step, setStep] = useState<Step>(Step.Payment);
+  const [step, setStep] = useState<Step>(Step.Success);
   // const { data } = useQuery({
   //   queryKey: ["payment-status", paymentId],
   //   queryFn: () => getPaymentStatus(paymentId),
@@ -30,7 +31,7 @@ export const Buy = () => {
       case Step.Payment:
         return <PaymentForm setStep={(step: Step) => setStep(step)} />;
       case Step.Success:
-        return <></>;
+        return <SuccessfulPurchase purchasedTickets={2} />;
     }
   };
   const getHeaderText = () => {
