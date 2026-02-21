@@ -9,9 +9,13 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: white;
+  background-color: black;
   flex-direction: column;
   justify-content: center;
+}
+.gallery-container .gallery-header {
+  position: absolute;
+  top: 0;
 }
 .gallery-container .carousel {
   position: static;
@@ -41,7 +45,7 @@
 }
 .gallery-container .carousel-indicators {
   height: 72px;
-  background-color: white;
+  background-color: black;
   width: 100vw;
   position: fixed;
   bottom: 16px;
@@ -80,4 +84,40 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
   /* Safari-specific fix для устранения багов с позиционированием */
   -webkit-transform: translateZ(0);
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  position: absolute;
+  bottom: 40px;
+  z-index: 3000;
+}
+
+.thumbnail {
+  border: 2px solid transparent;
+  padding: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+}
+.thumbnail img {
+  width: 48px;
+  height: 48px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.thumbnail.active img {
+  opacity: 1;
+}
+.thumbnail.active {
+  border-color: #ffffff;
+}
+.thumbnail:hover img {
+  opacity: 1;
 }

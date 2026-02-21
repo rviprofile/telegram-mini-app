@@ -19,9 +19,9 @@ export type Step = (typeof Step)[keyof typeof Step];
 
 export const Buy = () => {
   const [step, setStep] = useState<Step>(Step.Payment);
-  const [createPaymetResult, setCreatePaymentResult] =
+  const [createPaymentResult, setCreatePaymentResult] =
     useState<CreatePaymentResult | null>(null);
-  const transactionId = createPaymetResult?.id;
+  const transactionId = createPaymentResult?.id;
 
   const { data: transactionCompleteData } = useQuery<TransactionById>({
     queryKey: ["transaction/complete", transactionId],
@@ -36,18 +36,26 @@ export const Buy = () => {
   });
 
   useEffect(() => {
-    if (Boolean(transactionId)) {
+    if (transactionId && createPaymentResult?.url) {
       setStep(Step.Check);
+      window.location.href = createPaymentResult.url;
     }
-    if (transactionCompleteData?.status === "success") {
+  }, [transactionId, createPaymentResult]);
+
+  useEffect(() => {
+    if (
+      transactionCompleteData?.status === "success" ||
+      transactionCompleteData?.success === true
+    ) {
       setCreatePaymentResult(null);
       setStep(Step.Success);
     }
+
     if (transactionCompleteData?.status === "error") {
       setCreatePaymentResult(null);
       setStep(Step.Error);
     }
-  }, [transactionId, transactionCompleteData]);
+  }, [transactionCompleteData]);
 
   const getStep = () => {
     switch (step) {

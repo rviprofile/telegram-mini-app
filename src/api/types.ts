@@ -100,4 +100,6 @@ export type TransactionById = {
   completeDate: string | null;
   status: "create" | string;
   price: number;
+  error?: string;
+  success?: boolean | string;
 };
