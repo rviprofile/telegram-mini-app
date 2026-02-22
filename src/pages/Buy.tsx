@@ -58,6 +58,12 @@ export const Buy = () => {
     }
   }, [transactionCompleteData]);
 
+  useEffect(() => {
+    setCreatePaymentResult(null);
+    setStep(Step.Payment);
+    setPurchasedTickets(1);
+  }, []);
+
   const getStep = () => {
     switch (step) {
       case Step.Payment:
