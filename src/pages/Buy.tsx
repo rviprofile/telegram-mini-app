@@ -39,7 +39,16 @@ export const Buy = () => {
   useEffect(() => {
     if (transactionId && createPaymentResult?.url) {
       setStep(Step.Check);
-      window.open(createPaymentResult.url, "_blank");
+
+      const url = createPaymentResult.url;
+
+      if (window.Telegram?.WebApp?.openLink) {
+        // Открывает внешнюю ссылку через нативный браузер устройства
+        window.Telegram.WebApp.openLink(url);
+      } else {
+        // Фолбэк для браузера вне Telegram
+        window.open(url, "_blank");
+      }
     }
   }, [transactionId, createPaymentResult]);
 
