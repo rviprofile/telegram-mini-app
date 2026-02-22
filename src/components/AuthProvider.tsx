@@ -69,7 +69,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [tokens, isLoading, error]);
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {/* ✅ Не рендерим детей пока идёт загрузка или токен ещё не установлен */}
+      {isLoading || (Boolean(initData) && !tokens) ? null : children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

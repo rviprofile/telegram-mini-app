@@ -15,11 +15,13 @@ type FormValues = {
 
 export const PaymentForm = ({
   setCreatePaymentResult,
+  setPurchasedTickets,
 }: {
   setStep: (step: Step) => void;
   setCreatePaymentResult: React.Dispatch<
     React.SetStateAction<CreatePaymentResult | null>
   >;
+  setPurchasedTickets: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const methods = useForm<FormValues>({});
   const [ticketsCount, setTicketsCount] = useState<number>(1);
@@ -33,8 +35,9 @@ export const PaymentForm = ({
 
   useEffect(() => {
     if (paymentcreateresult?.success) {
+      setPurchasedTickets(ticketsCount);
       setCreatePaymentResult(paymentcreateresult);
-    } 
+    }
   }, [paymentcreateresult]);
 
   return (

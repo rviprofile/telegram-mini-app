@@ -1,6 +1,7 @@
 import { Button, Grid, Image, Text, VStack } from "@chakra-ui/react";
 import * as S from "./SuccessfulPurchase.styles";
 import { useNavigate } from "react-router-dom";
+import { pluralizeRu } from "../../utils/pluralizeRu";
 
 export const SuccessfulPurchase = ({
   purchasedTickets,
@@ -18,7 +19,7 @@ export const SuccessfulPurchase = ({
           fontWeight={700}
           fontSize={"36px"}
           marginBottom={"8px"}
-        >{`+${purchasedTickets} билет`}</Text>
+        >{`+${purchasedTickets} ${pluralizeRu(purchasedTickets, "билет", "билета", "билетов")}`}</Text>
 
         <Text>Ваши билеты в текущей акции:</Text>
         <Text>Итого билетов:</Text>
