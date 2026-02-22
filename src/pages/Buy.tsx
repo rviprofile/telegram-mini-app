@@ -26,10 +26,10 @@ export const Buy = () => {
   const transactionId = createPaymentResult?.id;
 
   const { data: transactionCompleteData } = useQuery<TransactionById>({
-    queryKey: ["transaction/complete", transactionId],
+    queryKey: ["/transaction/", transactionId],
     queryFn: async () => {
       const res = await API.get<TransactionById>(
-        `/transaction/complete/${transactionId}`,
+        `/transaction/${transactionId}`,
       );
       return res;
     },
