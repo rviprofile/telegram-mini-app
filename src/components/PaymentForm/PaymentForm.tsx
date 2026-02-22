@@ -7,6 +7,7 @@ import { Step } from "../../pages/Buy";
 import { useQuery } from "@tanstack/react-query";
 import API from "../../api";
 import type { CreatePaymentResult } from "../../api/types";
+import { StaticStepMap } from "../StaticStepMap/staticStepMap";
 
 type FormValues = {
   email: string;
@@ -116,6 +117,7 @@ export const PaymentForm = ({
           </Button>
         </VStack>
       </S.Form>
+      <StaticStepMap />
     </FormProvider>
   );
 };

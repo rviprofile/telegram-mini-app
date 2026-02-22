@@ -51,20 +51,24 @@ export const NavMenu = () => {
     },
   ];
 
+  const isSelected = (link: string) => {
+    if (link === "/") {
+      return path === "/";
+    }
+
+    return path.startsWith(link);
+  };
+
   return (
     <S.MenuContainer>
       {links.map((item) => {
+        const selected = isSelected(item.link);
+
         return (
-          <S.LinkButton
-            key={item.link}
-            to={item.link}
-            selected={path === item.link}
-          >
+          <S.LinkButton key={item.link} to={item.link} selected={selected}>
             <ChakraImage
-              src={`/icons/nav/${item.name}${
-                path === item.link ? "_selected" : ""
-              }.svg`}
-              width={'24px'}
+              src={`/icons/nav/${item.name}${selected ? "_selected" : ""}.svg`}
+              width="24px"
             />
             {item.title}
           </S.LinkButton>

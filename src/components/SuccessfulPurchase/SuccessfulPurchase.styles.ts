@@ -22,24 +22,3 @@ export const CardContainer = styled.div`
     line-height: 100%;
   }
 `;
-
-export const MapPoint = styled.div<{ gridColumn: string }>`
-  width: 39px;
-  height: 39px;
-  border-radius: 20px;
-  background: #bdf35d;
-  grid-column: ${({ gridColumn }) => gridColumn};
-`;
-
-export const PointLabel = styled(Text)`
-  color: white;
-  font-family: Inter;
-  font-weight: 600;
-  font-style: Semi Bold;
-  font-size: 14px;
-  leading-trim: NONE;
-  line-height: 120%;
-  letter-spacing: 0%;
-  text-align: center;
-  width: 100%;
-`;
