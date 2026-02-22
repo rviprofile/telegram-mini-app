@@ -99,6 +99,9 @@ export const Buy = () => {
   }, [transactionCompleteData]);
 
   useEffect(() => {
+    if (step === Step.Check) {
+      return;
+    }
     setCreatePaymentResult(null);
     setStep(Step.Payment);
     setPurchasedTickets(1);

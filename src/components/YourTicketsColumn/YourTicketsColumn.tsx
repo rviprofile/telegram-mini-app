@@ -1,9 +1,11 @@
 import { Button, HStack, Skeleton, VStack } from "@chakra-ui/react";
-import type { TicketsList } from "../../api/types";
+import type { TicketsList, User } from "../../api/types";
 import * as S from "./YourTicketsColumn.styles";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LinkToChannelCard } from "../LinkToChannelCard/LinkToChannelCard";
+import { useQuery } from "@tanstack/react-query";
+import API from "../../api";
 
 const Filter = {
   All: "all",
@@ -30,6 +32,14 @@ export const YourTicketsColumn = ({
       setIsScrolled(scrollRef.current.scrollTop > 0);
     }
   };
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async (): Promise<User> => {
+      return await API.get("/user");
+    },
+  });
+
+  const refLink = `https://t.me/VoshodLotteryBot?startapp=${user?.referalCode}`;
 
   if (!isLoading && !tickets) {
     return (
@@ -48,24 +58,25 @@ export const YourTicketsColumn = ({
           >
             Купить билет
           </Button>
-          <Button
-            size={"xl"}
-            borderRadius={8}
-            color={"white"}
-            bg={"#F74A78"}
-            h={"42px"}
-            w={"calc(50% - 4px)"}
-            padding={"9px 16px"}
-            onClick={() => {
-              navigator.share({
-                title: `Розыгрыш автомобиля!`,
-                text: "Покупай билеты, учавствуй в розыгрыше, следи за результатами",
-                url: "https://t.me/VoshodLotteryBot?startapp=ref_777",
-              });
-            }}
-          >
-            Пригласить друга
-          </Button>
+          {!!navigator.share && (
+            <Button
+              size={"xl"}
+              borderRadius={8}
+              color={"white"}
+              bg={"#F74A78"}
+              h={"42px"}
+              w={"calc(50% - 4px)"}
+              padding={"9px 16px"}
+              onClick={() => {
+                navigator.share({
+                  title: `Розыгрыш автомобиля!`,
+                  url: refLink,
+                });
+              }}
+            >
+              Пригласить друга
+            </Button>
+          )}
         </HStack>
       </S.CardContainer>
     );

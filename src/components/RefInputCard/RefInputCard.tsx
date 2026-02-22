@@ -56,19 +56,21 @@ export const RefInputCard = ({
         >
           {copyButtonText}
         </Button>
-        <Button
-          color={"white"}
-          variant={"outline"}
-          width={"100%"}
-          onClick={() => {
-            navigator.share({
-              title: `Розыгрыш автомобиля!`,
-              url: refLink,
-            });
-          }}
-        >
-          Поделиться
-        </Button>
+        {!!navigator.share && (
+          <Button
+            color={"white"}
+            variant={"outline"}
+            width={"100%"}
+            onClick={() => {
+              navigator.share({
+                title: `Розыгрыш автомобиля!`,
+                url: refLink,
+              });
+            }}
+          >
+            Поделиться
+          </Button>
+        )}
       </Grid>
     </S.Card>
   );

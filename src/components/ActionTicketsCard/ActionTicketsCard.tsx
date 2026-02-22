@@ -50,23 +50,25 @@ export const ActionTicketsCard = ({ user }: { user: User | undefined }) => {
         >
           Купить билет
         </Button>
-        <Button
-          size={"xl"}
-          borderRadius={8}
-          color={"white"}
-          bg={"#F74A78"}
-          h={"42px"}
-          w={"calc(50% - 4px)"}
-          padding={"9px 16px"}
-          onClick={() => {
-            navigator.share({
-              title: `Розыгрыш автомобиля!`,
-              url: refLink,
-            });
-          }}
-        >
-          Пригласить друга
-        </Button>
+        {!!navigator.share && (
+          <Button
+            size={"xl"}
+            borderRadius={8}
+            color={"white"}
+            bg={"#F74A78"}
+            h={"42px"}
+            w={"calc(50% - 4px)"}
+            padding={"9px 16px"}
+            onClick={() => {
+              navigator.share({
+                title: `Розыгрыш автомобиля!`,
+                url: refLink,
+              });
+            }}
+          >
+            Пригласить друга
+          </Button>
+        )}
       </HStack>
     </S.CardContainer>
   );
