@@ -98,7 +98,7 @@ export type TransactionById = {
   id: string | number;
   createDate: string;
   completeDate: string | null;
-  status: "create" | string;
+  status: "create" | "complete";
   price: number;
   error?: string;
   success?: boolean | string;

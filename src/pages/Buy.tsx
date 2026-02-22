@@ -2,7 +2,7 @@ import { Heading, Loader, Text, VStack } from "@chakra-ui/react";
 import { NavMenu } from "../components/NavMenu/NavMenu";
 import { Image as ChakraImage } from "@chakra-ui/react";
 import { PaymentForm } from "../components/PaymentForm/PaymentForm";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulPurchase";
 import { useQuery } from "@tanstack/react-query";
 import API from "../api";
@@ -25,6 +25,9 @@ export const Buy = () => {
   const [purchasedTickets, setPurchasedTickets] = useState<number>(1);
   const transactionId = createPaymentResult?.id;
 
+  const POLLING_TIMEOUT_MS = 3 * 60 * 1000; // 3 минуты
+  const pollingStartedAt = useRef<number | null>(null);
+
   const { data: transactionCompleteData } = useQuery<TransactionById>({
     queryKey: ["/transaction/", transactionId],
     queryFn: async () => {
@@ -34,7 +37,31 @@ export const Buy = () => {
       return res;
     },
     enabled: step === Step.Check,
-    refetchInterval: () => 1000,
+    refetchInterval: (query) => {
+      // Фиксируем время первого запроса
+      if (!pollingStartedAt.current) {
+        pollingStartedAt.current = Date.now();
+      }
+
+      const isTimeout =
+        Date.now() - pollingStartedAt.current > POLLING_TIMEOUT_MS;
+      const isCompleted =
+        query.state.data?.status === "complete" ||
+        query.state.data?.success === "failed" ||
+        query.state.data?.success === false;
+
+      if (isTimeout || isCompleted) {
+        if (isTimeout) {
+          setCreatePaymentResult(null);
+          setStep(Step.Payment);
+          setPurchasedTickets(1);
+        }
+        pollingStartedAt.current = null;
+        return false;
+      }
+
+      return 1000;
+    },
   });
 
   useEffect(() => {
@@ -55,14 +82,17 @@ export const Buy = () => {
 
   useEffect(() => {
     if (
-      transactionCompleteData?.status === "success" ||
+      transactionCompleteData?.status === "complete" ||
       transactionCompleteData?.success === true
     ) {
       setCreatePaymentResult(null);
       setStep(Step.Success);
     }
 
-    if (transactionCompleteData?.status === "error") {
+    if (
+      transactionCompleteData?.success === "error" ||
+      transactionCompleteData?.success === false
+    ) {
       setCreatePaymentResult(null);
       setStep(Step.Error);
     }
