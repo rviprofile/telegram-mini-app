@@ -7,6 +7,7 @@ import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulP
 import { useQuery } from "@tanstack/react-query";
 import API from "../api";
 import type { CreatePaymentResult, TransactionById } from "../api/types";
+import { openLink } from "@tma.js/sdk";
 
 export const Step = {
   Payment: "payment",
@@ -42,9 +43,9 @@ export const Buy = () => {
 
       const url = createPaymentResult.url;
 
-      if (window.Telegram?.WebApp?.openLink) {
+      if (!!openLink) {
         // Открывает внешнюю ссылку через нативный браузер устройства
-        window.Telegram.WebApp.openLink(url);
+        openLink(url);
       } else {
         // Фолбэк для браузера вне Telegram
         window.open(url, "_blank");
