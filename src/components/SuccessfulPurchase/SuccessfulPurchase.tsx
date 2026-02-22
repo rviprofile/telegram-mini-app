@@ -2,7 +2,8 @@ import { Button, Text, VStack } from "@chakra-ui/react";
 import * as S from "./SuccessfulPurchase.styles";
 import { useNavigate } from "react-router-dom";
 import { pluralizeRu } from "../../utils/pluralizeRu";
-import { StaticStepMap } from "../StaticStepMap/staticStepMap";
+import { StaticStepMap } from "../StaticStepMap/StaticStepMap";
+
 
 export const SuccessfulPurchase = ({
   purchasedTickets,
