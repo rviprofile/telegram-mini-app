@@ -8,7 +8,7 @@ import React, {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useTelegram } from "../hooks/useTelegram";
-import { setApiAccessToken } from "../api";
+import { beginAuthInit, failAuthInit, setApiAccessToken } from "../api";
 
 export type AuthTokens = {
   access?: string;
@@ -29,18 +29,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [tokens, setTokensState] = useState<AuthTokens | null>(null);
   const { initData, tg } = useTelegram();
 
+  // ✅ Сразу сигнализируем что идёт init — до любых запросов компонентов
+  useEffect(() => {
+    if (initData) {
+      beginAuthInit();
+    }
+  }, [initData]);
+
   const { data, isLoading, error } = useQuery<AuthTokens>({
     queryKey: ["telegram-login"],
     enabled: Boolean(initData),
     queryFn: async () => {
       const res = await axios.post<AuthTokens>(
         "https://lot.voshodcrm.ru/api/login/init",
-        {
-          initData,
-          startParam: tg.tgWebAppStartParam,
-        },
+        { initData, startParam: tg.tgWebAppStartParam },
       );
-
       return res.data;
     },
     retry: false,
@@ -48,10 +51,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
+    if (error) {
+      // ✅ Если init упал — разблокируем очередь
+      failAuthInit();
+    }
+  }, [error]);
+
+  useEffect(() => {
     if (!data?.access) return;
 
     setTokensState(data);
-    setApiAccessToken(data.access);
+    setApiAccessToken(data.access); // ✅ Это разрешит initPromise
 
     if (data.refresh) {
       try {
