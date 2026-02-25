@@ -29,7 +29,7 @@ export const RefsCounter = ({
         <HStack>
           <p className="segment">Защитано:</p>
           <p className="value">
-            {stats?.userCount?.toLocaleString("ru-RU")} /{" "}
+            {stats?.collectedToNext?.toLocaleString("ru-RU")} /{" "}
             {stats?.targetToNext?.toLocaleString("ru-RU")}
           </p>
         </HStack>
@@ -44,7 +44,7 @@ export const RefsCounter = ({
         </Slider.Control>
       </Slider.Root>
       <HStack>
-        <p className="segment">Билетов за рефералов:</p>
+        <p className="segment">Билеты рефералов:</p>
         <p className="value">
           {stats.referalTicketCount.toLocaleString("ru-RU")}
         </p>

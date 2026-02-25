@@ -1,27 +1,29 @@
 import { Button, Text, VStack } from "@chakra-ui/react";
 import * as S from "./SuccessfulPurchase.styles";
 import { useNavigate } from "react-router-dom";
-import { pluralizeRu } from "../../utils/pluralizeRu";
 import { StaticStepMap } from "../StaticStepMap/StaticStepMap";
-
+import type { TransactionById } from "../../api/types";
 
 export const SuccessfulPurchase = ({
-  purchasedTickets,
+  transactionCompleteData,
 }: {
-  purchasedTickets: number;
+  transactionCompleteData: TransactionById | undefined;
 }) => {
   const navigate = useNavigate();
+
   return (
     <VStack gap={"24px"} w={"100%"}>
       <S.CardContainer>
         <Text fontWeight={600}>
-          {purchasedTickets > 1 ? "Билеты начислены" : "Билет начислен"}
+          {Number(transactionCompleteData?.count) > 1
+            ? "Билеты начислены"
+            : "Билет начислен"}
         </Text>
         <Text
           fontWeight={700}
           fontSize={"36px"}
           marginBottom={"8px"}
-        >{`+${purchasedTickets} ${pluralizeRu(purchasedTickets, "билет", "билета", "билетов")}`}</Text>
+        >{`+${transactionCompleteData?.count} ${transactionCompleteData?.name}`}</Text>
         <Button
           size={"xl"}
           borderRadius={8}

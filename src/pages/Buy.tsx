@@ -6,7 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulPurchase";
 import { useQuery } from "@tanstack/react-query";
 import API from "../api";
-import type { CreatePaymentResult, TransactionById } from "../api/types";
+import type {
+  CreatePaymentResult,
+  TransactionById,
+} from "../api/types";
 import { openLink } from "@tma.js/sdk";
 
 export const Step = {
@@ -22,7 +25,6 @@ export const Buy = () => {
   const [step, setStep] = useState<Step>(Step.Payment);
   const [createPaymentResult, setCreatePaymentResult] =
     useState<CreatePaymentResult | null>(null);
-  const [purchasedTickets, setPurchasedTickets] = useState<number>(1);
   const transactionId = createPaymentResult?.id;
 
   const POLLING_TIMEOUT_MS = 3 * 60 * 1000; // 3 минуты
@@ -54,7 +56,6 @@ export const Buy = () => {
         if (isTimeout) {
           setCreatePaymentResult(null);
           setStep(Step.Payment);
-          setPurchasedTickets(1);
         }
         pollingStartedAt.current = null;
         return false;
@@ -104,7 +105,6 @@ export const Buy = () => {
     }
     setCreatePaymentResult(null);
     setStep(Step.Payment);
-    setPurchasedTickets(1);
   }, []);
 
   const getStep = () => {
@@ -114,13 +114,16 @@ export const Buy = () => {
           <PaymentForm
             setStep={(step: Step) => setStep(step)}
             setCreatePaymentResult={setCreatePaymentResult}
-            setPurchasedTickets={setPurchasedTickets}
           />
         );
       case Step.Check:
         return <Loader width={"20vw"} height={"20vw"} />;
       case Step.Success:
-        return <SuccessfulPurchase purchasedTickets={purchasedTickets} />;
+        return (
+          <SuccessfulPurchase
+            transactionCompleteData={transactionCompleteData}
+          />
+        );
     }
   };
   const getHeaderText = () => {

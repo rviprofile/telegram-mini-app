@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Step } from "../../pages/Buy";
 import { useQuery } from "@tanstack/react-query";
 import API from "../../api";
-import type { CreatePaymentResult } from "../../api/types";
+import type { CarDetail, CreatePaymentResult } from "../../api/types";
 
 type FormValues = {
   email: string;
@@ -15,14 +15,19 @@ type FormValues = {
 
 export const PaymentForm = ({
   setCreatePaymentResult,
-  setPurchasedTickets,
 }: {
   setStep: (step: Step) => void;
   setCreatePaymentResult: React.Dispatch<
     React.SetStateAction<CreatePaymentResult | null>
   >;
-  setPurchasedTickets: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+  const { data: cardetail } = useQuery({
+    queryKey: ["car/detail"],
+    queryFn: async (): Promise<CarDetail> => {
+      return await API.get("/car/detail");
+    },
+  });
+
   const methods = useForm<FormValues>({});
   const [ticketsCount, setTicketsCount] = useState<number>(1);
   const { data: paymentcreateresult, refetch: paymentcreate } = useQuery({
@@ -35,7 +40,6 @@ export const PaymentForm = ({
 
   useEffect(() => {
     if (paymentcreateresult?.success) {
-      setPurchasedTickets(ticketsCount);
       setCreatePaymentResult(paymentcreateresult);
     }
   }, [paymentcreateresult]);
@@ -43,7 +47,6 @@ export const PaymentForm = ({
   return (
     <FormProvider {...methods}>
       <S.Form onSubmit={() => {}}>
-        <Text>Покупка №12345</Text>
         <VStack gap={"32px"} margin={"32px 0 16px 0 "} align={"start"}>
           <HStack w={"100%"} justify={"space-between"}>
             <Button
@@ -90,10 +93,12 @@ export const PaymentForm = ({
               <Image src={"/icons/plus.svg"} width={"26px"} />
             </Button>
           </HStack>
-          <Text>
-            <span className="secondary">Сумма: </span>
-            {ticketsCount * 500} ₽
-          </Text>
+          {cardetail && (
+            <Text>
+              <span className="secondary">Сумма: </span>
+              {ticketsCount * cardetail.price} ₽
+            </Text>
+          )}
         </VStack>{" "}
         <VStack gap={"8px"}>
           <Button

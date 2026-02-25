@@ -18,6 +18,7 @@ export type CarDetail = {
     name: string;
     value: string;
   }[];
+  price: number;
 };
 export type LotteryStatus =
   | "await" // Ожидает запуска
@@ -102,4 +103,6 @@ export type TransactionById = {
   price: number;
   error?: string;
   success?: boolean | string;
+  count: string;
+  name: string;
 };
