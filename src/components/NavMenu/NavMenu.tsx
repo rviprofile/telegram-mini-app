@@ -7,7 +7,7 @@ import { useTelegram } from "../../hooks/useTelegram";
 export const NavMenu = () => {
   const iconNames = ["home", "tickets", "buy", "profile"];
   const { tg } = useTelegram();
-  const isIOS = tg.platform === "ios";
+  const isIOS = tg?.platform === "ios";
 
   // создаем объект с Image для каждой иконки
   const icons: Record<string, string> = {};
