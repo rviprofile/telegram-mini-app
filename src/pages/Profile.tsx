@@ -9,7 +9,7 @@ export const Profile = () => {
   const auth = useAuth();
 
   return (
-    <VStack minH={"calc(100dvh - 74px)"}>
+    <VStack minH={"calc(100dvh - 84px)"}>
       <Text fontSize="xl">Профиль пользователя</Text>
 
       {!tg ? (

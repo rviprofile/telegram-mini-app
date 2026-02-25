@@ -19,7 +19,7 @@ export const Docs = () => {
 
   return (
     <VStack
-      minH={"calc(100dvh - 70px)"}
+      minH={"calc(100dvh - 84px)"}
       w={"100%"}
       gap={"16px"}
       padding={"0 16px"}

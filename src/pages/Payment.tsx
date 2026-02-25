@@ -6,7 +6,7 @@ export type Step = "payment" | "success" | "error";
 export const Payment = () => {
   return (
     <VStack
-      minH={"calc(100dvh - 74px)"}
+      minH={"calc(100dvh - 84px)"}
       w={"100%"}
       gap={"12px"}
       padding={"32px 16px"}

@@ -150,7 +150,7 @@ export const Buy = () => {
 
   return (
     <VStack
-      minH={"calc(100dvh - 74px)"}
+      minH={"calc(100dvh - 84px)"}
       w={"100%"}
       gap={"8px"}
       padding={"32px 16px"}

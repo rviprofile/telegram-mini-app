@@ -18,7 +18,7 @@ export const Car = () => {
     return null;
   }
   return (
-    <VStack minH={"calc(100dvh - 74px)"} w={"100%"} gap={"16px"}>
+    <VStack minH={"calc(100dvh - 84px)"} w={"100%"} gap={"16px"}>
       <CarGallery cardetail={cardetail} />
       <CarDescription description={cardetail.description} />
       <CarInfo cardetail={cardetail} />
