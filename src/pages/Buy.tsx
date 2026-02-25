@@ -6,10 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { SuccessfulPurchase } from "../components/SuccessfulPurchase/SuccessfulPurchase";
 import { useQuery } from "@tanstack/react-query";
 import API from "../api";
-import type {
-  CreatePaymentResult,
-  TransactionById,
-} from "../api/types";
+import type { CreatePaymentResult, TransactionById } from "../api/types";
 import { openLink } from "@tma.js/sdk";
 
 export const Step = {
@@ -153,7 +150,7 @@ export const Buy = () => {
 
   return (
     <VStack
-      minH={"calc(100dvh - 60px)"}
+      minH={"calc(100dvh - 74px)"}
       w={"100%"}
       gap={"8px"}
       padding={"32px 16px"}

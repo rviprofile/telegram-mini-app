@@ -52,7 +52,7 @@ export const Home = () => {
     }
   };
   return (
-    <VStack minH={"calc(100dvh - 60px)"} w={"100%"} padding={"20px"}>
+    <VStack minH={"calc(100dvh - 74px)"} w={"100%"} padding={"20px"}>
       {isLoading ? (
         <Skeleton h={"25px"} w={"90px"} borderRadius={"16px"} opacity={"0.3"} />
       ) : (

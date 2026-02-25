@@ -30,7 +30,7 @@ export const Refs = () => {
     },
   });
   return (
-    <VStack minH={"calc(100dvh - 60px)"} w={"100%"} gap={"16px"}>
+    <VStack minH={"calc(100dvh - 74px)"} w={"100%"} gap={"16px"}>
       <PageHeader title="Рефералы" onPrev={() => navigate("/")} />
       <VStack w={"100%"} padding={"0 16px"}>
         <RefInputCard user={user} isLoading={isUserLoading} />

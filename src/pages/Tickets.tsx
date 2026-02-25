@@ -22,8 +22,8 @@ export const Tickets = () => {
   );
   return (
     <VStack
-      minH={"calc(100dvh - 60px)"}
-      maxH={"calc(100dvh - 60px)"}
+      minH={"calc(100dvh - 74px)"}
+      maxH={"calc(100dvh - 74px)"}
       w={"100%"}
       gap={"16px"}
       padding={"0 20px 0 20px"}
