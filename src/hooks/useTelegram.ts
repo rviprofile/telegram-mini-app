@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { retrieveLaunchParams, retrieveRawInitData } from "@tma.js/sdk";
+import {
+  retrieveLaunchParams,
+  retrieveRawInitData,
+} from "@tma.js/sdk";
 
 export interface TelegramUser {
   id: number;

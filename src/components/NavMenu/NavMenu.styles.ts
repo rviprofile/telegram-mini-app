@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
-export const MenuContainer = styled.nav`
+export const MenuContainer = styled.nav<{ isIOS: boolean }>`
   background-color: rgba(40, 53, 97, 1);
   box-shadow: 0px -5px 32px 0px rgba(0, 0, 0, 0.5);
   border-top: 2px solid rgba(78, 82, 127, 1);
@@ -14,6 +14,13 @@ export const MenuContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   z-index: 100;
+
+  ${({ isIOS }) =>
+    isIOS &&
+    `
+      padding-bottom: 16px;
+      min-height: 74px;
+    `}
 `;
 
 export const LinkButton = styled(Link)<{ selected: boolean }>`

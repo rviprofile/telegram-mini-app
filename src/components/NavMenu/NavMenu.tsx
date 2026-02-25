@@ -2,9 +2,12 @@ import { useLocation } from "react-router-dom";
 import * as S from "./NavMenu.styles";
 import { Image as ChakraImage } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useTelegram } from "../../hooks/useTelegram";
 
 export const NavMenu = () => {
   const iconNames = ["home", "tickets", "buy", "profile"];
+  const { tg } = useTelegram();
+  const isIOS = tg.platform === "ios";
 
   // создаем объект с Image для каждой иконки
   const icons: Record<string, string> = {};
@@ -60,7 +63,7 @@ export const NavMenu = () => {
   };
 
   return (
-    <S.MenuContainer>
+    <S.MenuContainer isIOS={isIOS}>
       {links.map((item) => {
         const selected = isSelected(item.link);
 
