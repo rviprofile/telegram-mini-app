@@ -35,7 +35,7 @@ export const RefsListCard = ({
     <S.Container>
       {stats && (
         <VStack className="header" align={"start"}>
-          <p>До следующего билета:</p>
+          <p>Рефералы:</p>
           <p className="header_value">
             {stats?.collectedToNext}{" "}
             {pluralizeRu(
